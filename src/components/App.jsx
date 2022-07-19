@@ -6,12 +6,7 @@ import { Filter } from './Filter';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     // name: '',
     // number: '',
     filter: '',
@@ -58,14 +53,25 @@ export class App extends Component {
     });
   };
 
-  render() {
+  getFilteredContacts = () => {
     const { contacts, filter } = this.state;
+
+    if (!filter) {
+      return contacts;
+    } else {
+      console.log('filter filter');
+      const normalized = filter.toLowerCase();
+      return contacts.filter(item =>
+        item.name.toLowerCase().includes(normalized)
+      );
+    }
+  };
+
+  render() {
+    const { filter } = this.state;
     const { handleSubmit, handleDelete, handleFilter } = this;
 
-    const normalized = filter.toLowerCase();
-    const filteredContacts = contacts.filter(item =>
-      item.name.toLowerCase().includes(normalized)
-    );
+    const filteredContacts = this.getFilteredContacts();
     // console.log('contacts', contacts);
     // console.log('filteredContacts', filteredContacts);
 
