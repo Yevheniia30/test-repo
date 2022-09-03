@@ -5,11 +5,14 @@ import Tutor from 'components/Tutor/Tutor';
 const TutorsList = ({ tutors }) => {
   console.log('tutors', tutors);
   return (
-    <ul>
-      {tutors.tutors.map(tutor => (
-        <Tutor tutor={tutor} />
-      ))}
-    </ul>
+    <>
+      <h3>Tutors</h3>
+      <ul>
+        {tutors.map(tutor => (
+          <Tutor tutor={tutor} />
+        ))}
+      </ul>
+    </>
   );
 };
 

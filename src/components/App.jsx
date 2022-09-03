@@ -6,8 +6,11 @@ import Main from './Main/Main';
 import school from '../assets/school.jpg';
 import TutorsList from './TutorsList/TutorsList';
 import data from '../data/data.json';
+import CitiesList from './CitiesList/CitiesList';
 
 export const App = () => {
+  console.log('data', data);
+
   return (
     <div
       style={{
@@ -36,7 +39,8 @@ export const App = () => {
             что большинство людей приходят к нам с нулевыми знаниями.{' '}
           </p>
         </Paper>
-        <TutorsList tutors={data} />
+        <TutorsList tutors={data.tutors} />
+        <CitiesList cities={data.cities} />
       </Main>
     </div>
   );
