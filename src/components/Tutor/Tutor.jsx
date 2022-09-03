@@ -1,20 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { TutorStyled, TutorItem } from './TutorStyled';
 
 const Tutor = ({ tutor }) => {
   const { firstName, lastName, patronymic, phone, email, city, options } =
     tutor;
   return (
     <>
-      <ul>
-        <li>
-          Name: {firstName} {lastName} {patronymic}
-        </li>
-        <li>Phone: {phone}</li>
-        <li>Email: {email}</li>
-        <li>City: {city}</li>
-        <li>Options: {options}</li>
-      </ul>
+      <TutorStyled>
+        <TutorItem>
+          <p>{firstName}</p>
+          <p>{patronymic}</p>
+          <p>{lastName}</p>
+        </TutorItem>
+        <TutorItem>
+          <p>{phone}</p>
+          <p>{email}</p>
+          <p>{city}</p>
+        </TutorItem>
+        <TutorItem> {options}</TutorItem>
+      </TutorStyled>
     </>
   );
 };

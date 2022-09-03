@@ -8,6 +8,7 @@ import TutorsList from './TutorsList/TutorsList';
 import data from '../data/data.json';
 import CitiesList from './CitiesList/CitiesList';
 import DepartmentList from './DepartmentList/DepartmentList';
+import Description from './Description/Description';
 
 export const App = () => {
   console.log('data', data);
@@ -15,32 +16,25 @@ export const App = () => {
   return (
     <div
       style={{
-        height: '100vh',
+        // maxWidth: '1200px',
+        // height: '100vh',
+        // height: '100%',
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 24,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // fontSize: 24,
         color: '#010101',
-        flexDirection: 'column',
+        // flexDirection: 'column',
       }}
     >
       <Sidebar menu={menuConfig} />
       <Main>
         <Paper>
           <Card image={school} title="MIT" />
+          <Description />
         </Paper>
-        <Paper>
-          <p>
-            Опыт, концентрат знаний и возможность избежать большинство ошибок
-            при приеме на работу. Мы знаем, что хотят большинство локальных и
-            иностранных компаний и можем вам это дать. А еще мы постоянно
-            совершенствуем наши курсы программирования, добавляя туда что-то
-            новое. Вы можете лично ознакомиться с историями успеха наших
-            выпускников, чтобы убедиться в эффективности нашей методики
-            обучения. Да, мы начнем с азов и самой простой информации. Знаем,
-            что большинство людей приходят к нам с нулевыми знаниями.{' '}
-          </p>
-        </Paper>
+        {/* <Paper></Paper> */}
+
         <TutorsList tutors={data.tutors} />
         <CitiesList cities={data.cities} />
         <DepartmentList departments={data.department} />

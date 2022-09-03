@@ -5,7 +5,7 @@ import Button from 'components/Button/Button';
 
 const DepartmentList = ({ departments }) => {
   return (
-    <>
+    <section>
       <h3>Departments</h3>
       <ul>
         {departments.map(item => (
@@ -13,7 +13,7 @@ const DepartmentList = ({ departments }) => {
         ))}
       </ul>
       <Button text="Add department" />
-    </>
+    </section>
   );
 };
 

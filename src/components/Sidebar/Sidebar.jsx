@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
+import { SidebarStyled, SidebarItem } from './SidebarStyled';
 
 const Sidebar = ({ menu }) => {
   return (
-    <ul>
-      {menu.map(item => (
-        <li key={item.name}>{item.name}</li>
+    <SidebarStyled>
+      {menu.map((item, i) => (
+        <SidebarItem i={i}>{item.name}</SidebarItem>
       ))}
-    </ul>
+    </SidebarStyled>
   );
 };
 
