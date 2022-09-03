@@ -8,7 +8,6 @@ import TutorsList from './TutorsList/TutorsList';
 import data from '../data/data.json';
 import CitiesList from './CitiesList/CitiesList';
 import DepartmentList from './DepartmentList/DepartmentList';
-import Button from './Button/Button';
 
 export const App = () => {
   console.log('data', data);
@@ -22,7 +21,6 @@ export const App = () => {
         alignItems: 'center',
         fontSize: 24,
         color: '#010101',
-        display: 'flex',
         flexDirection: 'column',
       }}
     >
@@ -46,7 +44,6 @@ export const App = () => {
         <TutorsList tutors={data.tutors} />
         <CitiesList cities={data.cities} />
         <DepartmentList departments={data.department} />
-        <Button />
       </Main>
     </div>
   );

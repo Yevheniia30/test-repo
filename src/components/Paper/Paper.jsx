@@ -4,6 +4,8 @@ const Paper = props => {
   return <>{props.children}</>;
 };
 
-Paper.propTypes = {};
+Paper.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Paper;

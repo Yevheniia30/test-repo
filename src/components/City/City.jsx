@@ -5,6 +5,8 @@ const City = ({ city }) => {
   return <p>{city}</p>;
 };
 
-City.propTypes = {};
+City.propTypes = {
+  city: PropTypes.string.isRequired,
+};
 
 export default City;

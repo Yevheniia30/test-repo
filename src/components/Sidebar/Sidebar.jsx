@@ -10,6 +10,12 @@ const Sidebar = ({ menu }) => {
   );
 };
 
-Sidebar.propTypes = {};
+Sidebar.propTypes = {
+  menu: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default Sidebar;
