@@ -1,7 +1,15 @@
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { LangContext } from 'context/LangContext';
 import StudentsListItem from '../StudentsListItem/StudentsListItem';
+// import { useSelector } from 'react-redux/es/exports';
 
 const StudentsList = ({ title, students, onDelete }) => {
+  const contextValue = useContext(LangContext);
+  const { lang } = useContext(LangContext);
+  console.log('contextValue', contextValue, 'lang', lang);
+  //
+  // const students1 = useSelector(state => state.users);
   return (
     <>
       {' '}
@@ -22,7 +30,7 @@ StudentsList.propTypes = {
   title: PropTypes.string,
   students: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       phone: PropTypes.string.isRequired,
       agreed: PropTypes.bool,

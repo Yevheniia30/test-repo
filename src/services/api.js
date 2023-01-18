@@ -12,6 +12,22 @@ export const getPosts = async (page = 1, limit = 8) => {
   return res.data;
 };
 
+export const getPostsSearch = async (query, page = 1, limit = 8) => {
+  const res = await axios.get('/posts', {
+    params: {
+      _page: page,
+      _limit: limit,
+      q: query,
+    },
+  });
+  return res.data;
+};
+
+export const getPost = async id => {
+  const res = await axios.get(`/posts/${id}`);
+  return res.data;
+};
+
 export const getComments = async id => {
   const res = await axios.get(`/posts/${id}/comments`);
   return res.data;

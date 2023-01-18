@@ -12,6 +12,8 @@ export const Item = styled.li`
   padding: ${({ theme }) => theme.spaces[3]}px;
   border: ${({ theme }) => theme.borders.none};
   border-radius: ${({ theme }) => theme.radii.normal}px;
-  background-color: ${props =>
-    props.active ? theme.colors.accentRed : theme.colors.background};
+  background-color: ${props => (props.active ? theme.colors.accentRed : theme.colors.background)};
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

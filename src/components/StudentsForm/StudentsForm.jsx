@@ -1,6 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext, useMemo } from 'react';
 import { nanoid } from 'nanoid';
 import { useForm } from 'hooks/useForm';
+
+import local from '../../local/local.json';
+import { LangContext } from '../../context/LangContext';
 
 const INITIAL_STATE = {
   name: '',
@@ -11,7 +14,11 @@ const INITIAL_STATE = {
 };
 
 const StudentsForm = ({ onSubmit }) => {
-  const { name, phone, handleChangeName, handleChangePhone, handleSubmit } = useForm('', onSubmit);
+  const { name, phone, handleChangeName, handleChangePhone, handleSubmit } = useForm(onSubmit);
+
+  const { lang } = useContext(LangContext);
+
+  console.log('local', local);
 
   // const [name, setName] = useState('');
   // const [phone, setPhone] = useState('');
@@ -89,19 +96,24 @@ const StudentsForm = ({ onSubmit }) => {
   // публічна властивість класу (записується на екземпляр, тому  в кожного екземпляру будуть свої)
 
   // якщо загорнути ці змінні в useMemo, вони не будуть генеруватися при кожній зміні інпута
-  const nameInputId = nanoid(4);
-  const phoneInputId = nanoid(4);
+
+  const nameInputId = useMemo(() => nanoid(4), []);
+  const phoneInputId = useMemo(() => nanoid(4), []);
 
   // const { handleChange, nameInputId, phoneInputId, handleSubmit } = this;
   // const { handleSubmit } = this.props;
   // const { name, phone, gender, agreed, course } = this.state;
+
+  const nameLabel = local.name[lang];
+  const phoneLabel = local.phone[lang];
+  const btnTitle = local.add[lang];
 
   return (
     // контрольована форма
     // форма має бути окремий компонентом зі своїм станом в якому зберігаються значення полів форми
     // onSubmit це проп який відповідає за відправку форми
     <form onSubmit={handleSubmit}>
-      <label htmlFor={nameInputId}>name</label>
+      <label htmlFor={nameInputId}>{nameLabel}</label>
       <input
         type="text"
         id={nameInputId}
@@ -109,10 +121,11 @@ const StudentsForm = ({ onSubmit }) => {
         value={name}
         onChange={handleChangeName}
         ref={inputRef}
+        // placeholder={nameLabel}
         // autoFocus
       />
       <br />
-      <label htmlFor="phone">phone</label>
+      <label htmlFor={phoneInputId}>{phoneLabel}</label>
       <input
         type="text"
         id={phoneInputId}
@@ -165,7 +178,7 @@ const StudentsForm = ({ onSubmit }) => {
           />
         </label>
         <br /> */}
-      <button>add student</button>
+      <button>{btnTitle}</button>
     </form>
   );
 };

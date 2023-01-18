@@ -1,5 +1,6 @@
 import { Component, useEffect, useRef } from 'react';
 import { getImagesReq1, getPosts } from 'services/api';
+import { Link } from 'react-router-dom';
 
 class Posts extends Component {
   state = {
@@ -94,8 +95,12 @@ class Posts extends Component {
             <ul>
               {posts.map(post => (
                 <li key={post.id}>
-                  <b>{post.title}</b>
-                  <p>{post.body}</p>
+                  <Link to={`/posts/${post.id}`}>
+                    {' '}
+                    <b>{post.title}</b>
+                  </Link>
+
+                  {/* <p>{post.body}</p> */}
                 </li>
               ))}
             </ul>

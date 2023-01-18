@@ -1,11 +1,26 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import axios from 'axios';
 
-import { addUser, deleteUser, getUser } from '../../services/api';
+// import { addUser, deleteUser, getUser } from '../../services/api';
 
-import StudentsForm from './StudentsForm/StudentsForm';
-import StudentsList from './StudentsList/StudentsList';
+import StudentsForm from '../../components/StudentsForm/StudentsForm';
+import StudentsList from 'components/StudentsList/StudentsList';
 import { nanoid } from 'nanoid';
+
+// import { LangContext } from 'context/LangContext';
+
+import local from '../../local/local.json';
+
+import { useLang } from 'hooks/useLang';
+import { useSelector, useDispatch } from 'react-redux';
+// import { addUser, filterUser, removeUser } from 'redux/actions';
+// import { addUser, removeUser } from 'redux/users/actions';
+// екшени із слайса
+import { addUser, removeUser } from 'redux/users/usersSlice';
+import { filterUser } from 'redux/filter/actions';
+// import { getFilter, getUsers } from 'redux/selectors';
+import { getUsers } from 'redux/users/selectors';
+import { getFilter } from 'redux/filter/selectors';
 
 // Виносимо об'єкт із примітивами в константу, щоб було зручно скидати.
 // Не можна використовувати, якщо в якійсь властивості стану зберігається складний тип.
@@ -16,10 +31,19 @@ import { nanoid } from 'nanoid';
 // };
 
 const Students = () => {
+  // поверне value тобто ua
+  // const { lang } = useContext(LangContext);
+  const { lang } = useLang();
+
   // const [users, setUsers] = useState([]);
   const [users, setUsers] = useState(() => {
     return JSON.parse(localStorage.getItem('users')) ?? [];
   });
+
+  const users1 = useSelector(state => state.users.users);
+  const filter = useSelector(getFilter);
+  // const users1 = useSelector(getUsers);
+
   // const [users, setUsers] = useState([])
   // const [users, setUsers] = useState([])
   // const [users, setUsers] = useState([])
@@ -35,13 +59,29 @@ const Students = () => {
     localStorage.setItem('users', JSON.stringify(users));
   }, [users]);
 
+  // викликаєм usedispatch i він нам повертає функцію dispatch
+  const dispatch = useDispatch();
+
   const handleSubmit = userData => {
-    setUsers(prev => [userData, ...prev]);
+    // беремо дані які треба додати в стор, викликаєм екшен і передаєм їх в екшен, екшен повертає об'єкт і цей об'єкт передаєм в діспатч
+    // і тоді діспатч викликає редюсер і передає в нього наш екшен
+    const action = addUser(userData);
+    console.log('action', action);
+    dispatch(addUser(userData));
+    // setUsers(prev => [userData, ...prev]);
   };
 
-  const handleDelete = useCallback(id => {
-    setUsers(prev => prev.filter(item => item.id !== id));
-  }, []);
+  const handleDelete = useCallback(
+    id => {
+      dispatch(removeUser(id));
+      // setUsers(prev => prev.filter(item => item.id !== id));
+    },
+    [dispatch]
+  );
+
+  const onFilter = e => {
+    dispatch(filterUser(e.target.value));
+  };
 
   // ================CLASS==================
   // state = {
@@ -162,14 +202,23 @@ const Students = () => {
 
   console.log('students', users);
 
+  const title = local.title[lang];
+
+  const filtered = () => {
+    if (filter) {
+      return users1.filter(item => item.name.includes(filter));
+    }
+    return users1;
+  };
   return (
     <>
       <StudentsForm onSubmit={handleSubmit} />
       {/* {loading && <p>....loading</p>} */}
       {/* {error && <p>{error.message}</p>} */}
-      {users?.length ? (
+      {users1?.length ? (
         <>
-          <StudentsList students={users} title="Students" onDelete={handleDelete} />
+          <input type="text" value={filter} onChange={onFilter} />
+          <StudentsList students={filtered()} title={title} onDelete={handleDelete} />
           {/* <button type="button" onClick={this.onLoadMore}>
             Load more
           </button> */}
@@ -184,3 +233,5 @@ const Students = () => {
 // name, phone, gender, course, agreed
 
 export default Students;
+
+// i18n інтернационализация
