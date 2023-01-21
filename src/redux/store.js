@@ -3,6 +3,8 @@ import { configureStore } from '@reduxjs/toolkit';
 // import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+// https://62eebbae8d7bc7c2eb71c14b.mockapi.io/api/v1/users
+
 // import { usersReducer } from './users/reducer';
 // редюсер із слайса
 import usersReducer from './users/usersSlice';
@@ -29,8 +31,8 @@ const persistedReducer = persistReducer(persistConfig, usersReducer);
 
 export const store = configureStore({
   reducer: {
-    // users: usersReducer,
-    users: persistedReducer,
+    users: usersReducer,
+    // users: persistedReducer,
     filter: filterReducer,
   },
   middleware: getDefaultMiddleware =>
@@ -42,7 +44,9 @@ export const store = configureStore({
 });
 
 // створюємо змінну і огортаєм наш стор персістором
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
+
+// щоб коректно працював персіст, або огортаємо персістом весь стор, або робимо початковий стан колекції не масивом, а об'єктом, тому що пересіст не застосовується до масива
 
 // const reducer = combineReducers({
 //   users: usersReducer,

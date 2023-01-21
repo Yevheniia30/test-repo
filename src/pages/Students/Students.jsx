@@ -16,11 +16,12 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { addUser, filterUser, removeUser } from 'redux/actions';
 // import { addUser, removeUser } from 'redux/users/actions';
 // екшени із слайса
-import { addUser, removeUser } from 'redux/users/usersSlice';
+// import { addUser, removeUser } from 'redux/users/usersSlice';
 import { filterUser } from 'redux/filter/actions';
 // import { getFilter, getUsers } from 'redux/selectors';
-import { getUsers } from 'redux/users/selectors';
+import { getUsers, getError, getLoading } from 'redux/users/selectors';
 import { getFilter } from 'redux/filter/selectors';
+import { fetchUsers, addUserFunc, removeUser, updateUser } from 'redux/users/operations';
 
 // Виносимо об'єкт із примітивами в константу, щоб було зручно скидати.
 // Не можна використовувати, якщо в якійсь властивості стану зберігається складний тип.
@@ -42,6 +43,8 @@ const Students = () => {
 
   const users1 = useSelector(state => state.users.users);
   const filter = useSelector(getFilter);
+  const error = useSelector(getError);
+  const loading = useSelector(getLoading);
   // const users1 = useSelector(getUsers);
 
   // const [users, setUsers] = useState([])
@@ -55,25 +58,31 @@ const Students = () => {
   //   }
   // }, []);
 
-  useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(users));
-  }, [users]);
+  // useEffect(() => {
+  //   localStorage.setItem('users', JSON.stringify(users));
+  // }, [users]);
 
   // викликаєм usedispatch i він нам повертає функцію dispatch
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
   const handleSubmit = userData => {
     // беремо дані які треба додати в стор, викликаєм екшен і передаєм їх в екшен, екшен повертає об'єкт і цей об'єкт передаєм в діспатч
     // і тоді діспатч викликає редюсер і передає в нього наш екшен
-    const action = addUser(userData);
-    console.log('action', action);
-    dispatch(addUser(userData));
+    // const action = addUser(userData);
+    // console.log('action', action);
+    // dispatch(addUser(userData));
+    dispatch(addUserFunc(userData));
     // setUsers(prev => [userData, ...prev]);
   };
 
   const handleDelete = useCallback(
     id => {
       dispatch(removeUser(id));
+      // dispatch(removeUser(id));
       // setUsers(prev => prev.filter(item => item.id !== id));
     },
     [dispatch]
@@ -81,6 +90,11 @@ const Students = () => {
 
   const onFilter = e => {
     dispatch(filterUser(e.target.value));
+  };
+
+  const handleUpdate = ({ id, user }) => {
+    console.log('id', id, 'user', user);
+    dispatch(updateUser({ id, user }));
   };
 
   // ================CLASS==================
@@ -200,7 +214,7 @@ const Students = () => {
   // const { handleSubmit } = this;
   // const { users, error, loading } = this.state;
 
-  console.log('students', users);
+  // console.log('students', users);
 
   const title = local.title[lang];
 
@@ -210,21 +224,29 @@ const Students = () => {
     }
     return users1;
   };
+
   return (
     <>
       <StudentsForm onSubmit={handleSubmit} />
       {/* {loading && <p>....loading</p>} */}
       {/* {error && <p>{error.message}</p>} */}
+      {loading && <p>loading.....</p>}
+      {error && <p>{error}</p>}
       {users1?.length ? (
         <>
           <input type="text" value={filter} onChange={onFilter} />
-          <StudentsList students={filtered()} title={title} onDelete={handleDelete} />
+          <StudentsList
+            students={filtered()}
+            title={title}
+            onDelete={handleDelete}
+            onUpdate={handleUpdate}
+          />
           {/* <button type="button" onClick={this.onLoadMore}>
             Load more
           </button> */}
         </>
       ) : (
-        <p>There are no students </p>
+        !loading && !error && <p>There are no students </p>
       )}
     </>
   );

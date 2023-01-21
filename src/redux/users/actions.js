@@ -7,6 +7,19 @@ import { createAction } from '@reduxjs/toolkit';
 // тому можна видалити файли з типами
 
 // якщо потрібно додати айді або зробити ще якусь дію, другим аргументом в createAction передаємо функцію. яка приймає пейлоад, і повертає пейлоад з доданим айді
+
+export const fetchUsersLoading = createAction('users/fetch/loading');
+export const fetchUsersSucces = createAction('users/fetch/success');
+export const fetchUsersError = createAction('users/fetch/error');
+
+export const addUsersLoading = createAction('users/add/loading');
+export const addUsersSucces = createAction('users/add/success');
+export const addUsersError = createAction('users/add/error');
+
+export const removeUsersLoading = createAction('users/remove/loading');
+export const removeUsersSucces = createAction('users/remove/success');
+export const removeUsersError = createAction('users/remove/error');
+
 export const addUser = createAction('ADD_USER', payload => ({
   payload: {
     ...payload,

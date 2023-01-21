@@ -1,24 +1,43 @@
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 
-export const useForm = onSubmit => {
+export const useForm = (onSubmit, initialValues, id, onClose) => {
   // створює стан і фугкції і повертає на основі того даних  що отримує
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [state, setState] = useState(initialValues);
 
-  const handleChangeName = e => {
-    setName(e.target.value);
-  };
+  // const [phone, setPhone] = useState('');
 
-  const handleChangePhone = e => {
-    setPhone(e.target.value);
+  // const handleChangeName = e => {
+  //   setName(e.target.value);
+  // };
+
+  // const handleChangePhone = e => {
+  //   setPhone(e.target.value);
+  // };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setState(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ name, phone, id: nanoid(4) });
-    setName('');
-    setPhone('');
+    if (id) {
+      console.log('useform id', id, 'state', state);
+      onSubmit({ id, user: state });
+      setState(initialValues);
+      onClose();
+      return;
+    } else {
+      onSubmit(state);
+    }
+
+    setState(initialValues);
+    // setName('');
+    // setPhone('');
   };
-  return { handleChangeName, handleChangePhone, handleSubmit, name, setName, phone, setPhone };
+  return { handleChange, handleSubmit, state };
 };

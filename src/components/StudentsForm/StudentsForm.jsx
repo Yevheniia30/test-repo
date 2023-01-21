@@ -5,7 +5,7 @@ import { useForm } from 'hooks/useForm';
 import local from '../../local/local.json';
 import { LangContext } from '../../context/LangContext';
 
-const INITIAL_STATE = {
+const init = {
   name: '',
   phone: '',
   // gender: null,
@@ -13,12 +13,13 @@ const INITIAL_STATE = {
   // course: '',
 };
 
-const StudentsForm = ({ onSubmit }) => {
-  const { name, phone, handleChangeName, handleChangePhone, handleSubmit } = useForm(onSubmit);
+const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
+  const initialValues = userToEdit ?? init;
+  const { state, handleChange, handleSubmit } = useForm(onSubmit, initialValues, id, onClose);
 
   const { lang } = useContext(LangContext);
 
-  console.log('local', local);
+  // console.log('local', local);
 
   // const [name, setName] = useState('');
   // const [phone, setPhone] = useState('');
@@ -39,7 +40,7 @@ const StudentsForm = ({ onSubmit }) => {
   // };
 
   const inputRef = useRef();
-  console.log('inpetref', inputRef);
+  // console.log('inpetref', inputRef);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -106,7 +107,14 @@ const StudentsForm = ({ onSubmit }) => {
 
   const nameLabel = local.name[lang];
   const phoneLabel = local.phone[lang];
-  const btnTitle = local.add[lang];
+  const btnTitle = userToEdit ? local.edit[lang] : local.add[lang];
+
+  // const handleUpdate = e => {
+  //   e.preventDefault();
+  //   console.log('handleUpdate');
+  //   onSubmit({ id: userToEdit.id, user: state });
+  //   onClose();
+  // };
 
   return (
     // контрольована форма
@@ -118,20 +126,26 @@ const StudentsForm = ({ onSubmit }) => {
         type="text"
         id={nameInputId}
         name="name"
-        value={name}
-        onChange={handleChangeName}
+        // value={userToEdit?.name ?? name}
+        value={state.name}
+        onChange={handleChange}
         ref={inputRef}
+        // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        // title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         // placeholder={nameLabel}
         // autoFocus
       />
       <br />
       <label htmlFor={phoneInputId}>{phoneLabel}</label>
       <input
-        type="text"
+        type="tel"
         id={phoneInputId}
-        value={phone}
+        // value={userToEdit?.phone ?? phone}
+        value={state.phone}
         name="phone"
-        onChange={handleChangePhone}
+        onChange={handleChange}
+        // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+        // title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
       />
       <br />
       {/* <label>
@@ -178,7 +192,7 @@ const StudentsForm = ({ onSubmit }) => {
           />
         </label>
         <br /> */}
-      <button>{btnTitle}</button>
+      <button disabled={state === initialValues || !state.name || !state.phone}>{btnTitle}</button>
     </form>
   );
 };
