@@ -21,5 +21,5 @@ export const Modal = ({ children, onClose }) => {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func,
 };

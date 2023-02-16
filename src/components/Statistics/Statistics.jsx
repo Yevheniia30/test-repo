@@ -6,7 +6,9 @@ import { Box } from 'components/Box/Box.styled';
 import { List, Item } from './Statistics.styled';
 import Button from 'components/Button/Button';
 
-const icons = [<BiLike />, <FaUserFriends />, <FaShoppingBasket />, <FaTree />];
+// const icons = [<BiLike />, <FaUserFriends />, <FaShoppingBasket />, <FaTree />];
+const icons = [BiLike, FaUserFriends, FaShoppingBasket, FaTree];
+// const Icon = BiLike;
 
 export class Statistics extends Component {
   state = {
@@ -26,12 +28,13 @@ export class Statistics extends Component {
     });
   };
 
-  handleClickOverlay = e => {
-    console.log('e', e.target);
-    e.target === e.currentTarget && this.setState({ activeIndex: null });
-  };
+  // handleClickOverlay = e => {
+  //   console.log('e', e.target);
+  //   e.target === e.currentTarget && this.setState({ activeIndex: null });
+  // };
 
   render() {
+    // console.log('stats', this.props.stats);
     const { title, stats } = this.props;
     return (
       <Box
@@ -44,9 +47,7 @@ export class Statistics extends Component {
         onClick={this.handleClickOverlay}
       >
         {title && <h3>{title}</h3>}
-        <Button propClick={this.handleShowStats}>
-          {this.state.isShow ? 'Hide' : 'Show'}
-        </Button>
+        <Button propClick={this.handleShowStats}>{this.state.isShow ? 'Hide' : 'Show'}</Button>
         {this.state.isShow && (
           <List>
             {stats.map(({ id, total, title }, i) => {
@@ -57,7 +58,9 @@ export class Statistics extends Component {
                   // onClick={this.handleClick}
                   active={i === this.state.activeIndex}
                 >
-                  {icons[i]}
+                  {/* <Icon  /> */}
+                  {icons.map((Icon, idx) => i === idx && <Icon />)}
+                  {/* {icons[i]} */}
                   <p>{total}</p>
                   <p>{title}</p>
                 </Item>
@@ -71,3 +74,6 @@ export class Statistics extends Component {
 }
 
 // export default Statistics;
+Statistics.defaultProps = {
+  stats: [],
+};

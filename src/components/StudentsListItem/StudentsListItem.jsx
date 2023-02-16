@@ -10,7 +10,7 @@ import StudentsForm from 'components/StudentsForm/StudentsForm';
 // інколи є сенс використовувати мемо якщо висока імовірність що батьківський компонент буде передавати дочірньому однакові пропси при нових рендерах
 // якщо в дочірній компонент передається функція - наприклад видалення, то мемо не має сенсу, бо функція створюватиметься кожен раз нова і відповідно матиме нове посилання і сприйматиметься як новий проп - вирішується useCallback-ом
 
-const StudentsListItem = ({ id, name, phone, onDelete, onUpdate }) => {
+const StudentsListItem = ({ id, name, number, onDelete, onUpdate }) => {
   const [openModal, setOpenModal] = useState(false);
 
   // console.log('sum', sum);
@@ -27,7 +27,7 @@ const StudentsListItem = ({ id, name, phone, onDelete, onUpdate }) => {
   return (
     <>
       <p>{name}</p>
-      <p>{phone}</p>
+      <p>{number}</p>
       <button type="button" onClick={() => setOpenModal(true)}>
         {edit}
       </button>
@@ -37,7 +37,7 @@ const StudentsListItem = ({ id, name, phone, onDelete, onUpdate }) => {
       {openModal && (
         <Modal onClose={closeModal}>
           <StudentsForm
-            userToEdit={{ name, phone }}
+            userToEdit={{ name, number }}
             id={id}
             onSubmit={onUpdate}
             onClose={closeModal}

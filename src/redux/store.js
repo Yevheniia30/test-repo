@@ -9,6 +9,8 @@ import storage from 'redux-persist/lib/storage';
 // редюсер із слайса
 import usersReducer from './users/usersSlice';
 import { filterReducer } from './filter/reducer';
+import authReducer from './auth/authSlice';
+
 import {
   persistStore,
   persistReducer,
@@ -22,15 +24,17 @@ import {
 
 // створюємо об'єкт налаштувань персіст конфіг
 const persistConfig = {
-  key: 'users',
+  key: 'auth',
   storage,
+  whitelist: ['token'],
 };
 // створюємо функцію-обгортку для редюча=ера
 // персістредюсер зберігає в локалсторейдж кожного разу коли змінюється стор редюсера який в нього передали
-const persistedReducer = persistReducer(persistConfig, usersReducer);
+const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
+    auth: persistedReducer,
     users: usersReducer,
     // users: persistedReducer,
     filter: filterReducer,
@@ -44,7 +48,7 @@ export const store = configureStore({
 });
 
 // створюємо змінну і огортаєм наш стор персістором
-// export const persistor = persistStore(store);
+export const persistor = persistStore(store);
 
 // щоб коректно працював персіст, або огортаємо персістом весь стор, або робимо початковий стан колекції не масивом, а об'єктом, тому що пересіст не застосовується до масива
 

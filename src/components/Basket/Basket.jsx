@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Button from 'components/Button/Button';
 
 export class Basket extends Component {
   state = {
@@ -15,9 +16,9 @@ export class Basket extends Component {
   render() {
     return (
       <>
-        <button type="button"></button>
-        <button type="button"></button>
-        <button type="button"></button>
+        <Button type="button"></Button>
+        <Button type="button"></Button>
+        <Button type="button"></Button>
 
         <p>
           total: <span>{this.handleTotal()}</span>

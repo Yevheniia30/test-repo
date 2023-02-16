@@ -12,8 +12,7 @@ export const StyledButton = styled(ButtonContainer).attrs({
 })`
   gap: ${({ theme }) => theme.spaces[2]}px;
 
-  background-color: ${props =>
-    props.disabled ? theme.colors.muted : theme.colors.primary};
+  background-color: ${props => (props.disabled ? theme.colors.muted : theme.colors.primary)};
   cursor: pointer;
   :disabled {
     cursor: not-allowed;
@@ -21,7 +20,15 @@ export const StyledButton = styled(ButtonContainer).attrs({
 
   :hover:not(:disabled),
   :focus:not(:disabled) {
-    background-color: ${props =>
-      props.add ? theme.colors.accentGreen : theme.colors.accentRed};
+    background-color: ${props => (props.add ? theme.colors.accentGreen : theme.colors.accentRed)};
   }
 `;
+
+export const FancyButton = styled(StyledButton)`
+  background-image: linear-gradient(to right, #f6d365 0%, #fda085 100%);
+  border: none;
+`;
+
+export const SubmitButton = styled(StyledButton).attrs({
+  type: 'submit',
+});

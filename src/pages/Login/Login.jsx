@@ -1,22 +1,22 @@
 import Register from 'components/Register/Register';
 import { useDispatch, useSelector } from 'react-redux';
-import { signup } from 'redux/auth/authOperations';
+import { login } from 'redux/auth/authOperations';
 // import { Navigate } from 'react-router-dom';
 
-const RegisterPage = () => {
+const Login = () => {
   const dispatch = useDispatch();
   // const isLogin = useSelector(state => state.auth.isLogin);
 
   const handleSubmit = data => {
     // e.preventDefault();
-    dispatch(signup(data));
+    dispatch(login(data));
   };
 
   // if (isLogin) {
   //   return <Navigate to="/users" />;
   // }
 
-  return <Register isSignUp={true} onSubmit={handleSubmit} />;
+  return <Register onSubmit={handleSubmit} />;
 };
 
-export default RegisterPage;
+export default Login;

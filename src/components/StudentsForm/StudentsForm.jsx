@@ -7,7 +7,7 @@ import { LangContext } from '../../context/LangContext';
 
 const init = {
   name: '',
-  phone: '',
+  number: '',
   // gender: null,
   // agreed: false,
   // course: '',
@@ -116,6 +116,8 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
   //   onClose();
   // };
 
+  // console.log('initialstate', initialValues);
+
   return (
     // контрольована форма
     // форма має бути окремий компонентом зі своїм станом в якому зберігаються значення полів форми
@@ -141,8 +143,8 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
         type="tel"
         id={phoneInputId}
         // value={userToEdit?.phone ?? phone}
-        value={state.phone}
-        name="phone"
+        value={state.number}
+        name="number"
         onChange={handleChange}
         // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         // title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
@@ -192,7 +194,7 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
           />
         </label>
         <br /> */}
-      <button disabled={state === initialValues || !state.name || !state.phone}>{btnTitle}</button>
+      <button disabled={state === initialValues || !state.name || !state.number}>{btnTitle}</button>
     </form>
   );
 };

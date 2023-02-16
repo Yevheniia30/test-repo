@@ -47,7 +47,7 @@ export const addUserFunc = createAsyncThunk(
         return false;
       }
       if (isDuplicate(user, users.users).phoneRes) {
-        alert(`${user.phone} is already exists`);
+        alert(`${user.number} is already exists`);
         return false;
       }
     },
@@ -105,7 +105,7 @@ export const updateUser = createAsyncThunk(
 
 const isDuplicate = (user, users) => {
   const nameRes = users.find(item => item.name === user.name);
-  const phoneRes = users.find(item => item.phone === user.phone);
+  const phoneRes = users.find(item => item.number === user.number);
 
   return { nameRes, phoneRes };
 };

@@ -32,7 +32,7 @@ StudentsList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      phone: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
       agreed: PropTypes.bool,
       gender: PropTypes.string,
       course: PropTypes.string,

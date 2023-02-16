@@ -22,6 +22,7 @@ import { filterUser } from 'redux/filter/actions';
 import { getUsers, getError, getLoading } from 'redux/users/selectors';
 import { getFilter } from 'redux/filter/selectors';
 import { fetchUsers, addUserFunc, removeUser, updateUser } from 'redux/users/operations';
+import { useAuth } from 'hooks/useAuth';
 
 // Виносимо об'єкт із примітивами в константу, щоб було зручно скидати.
 // Не можна використовувати, якщо в якійсь властивості стану зберігається складний тип.
@@ -45,6 +46,7 @@ const Students = () => {
   const filter = useSelector(getFilter);
   const error = useSelector(getError);
   const loading = useSelector(getLoading);
+  const isLogin = useAuth();
   // const users1 = useSelector(getUsers);
 
   // const [users, setUsers] = useState([])
@@ -70,6 +72,7 @@ const Students = () => {
   }, [dispatch]);
 
   const handleSubmit = userData => {
+    // console.log('userData', userData);
     // беремо дані які треба додати в стор, викликаєм екшен і передаєм їх в екшен, екшен повертає об'єкт і цей об'єкт передаєм в діспатч
     // і тоді діспатч викликає редюсер і передає в нього наш екшен
     // const action = addUser(userData);

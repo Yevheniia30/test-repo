@@ -26,7 +26,7 @@ export const useForm = (onSubmit, initialValues, id, onClose) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (id) {
-      console.log('useform id', id, 'state', state);
+      // console.log('useform id', id, 'state', state);
       onSubmit({ id, user: state });
       setState(initialValues);
       onClose();

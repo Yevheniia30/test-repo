@@ -1,5 +1,5 @@
 import Button from 'components/Button/Button';
-import { ButtonContainer } from 'components/Button/Button.styled';
+import { ButtonContainer, FancyButton } from 'components/Button/Button.styled';
 import { formatDistanceToNow } from 'date-fns';
 
 import { Text, Tag, Title, Card } from './BlogCard.styled';
@@ -8,15 +8,7 @@ import { AiOutlineUserAdd, AiOutlineSearch } from 'react-icons/ai';
 // formatDistance(subDays(new Date(), 3), new Date(), { addSuffix: true })
 //=> "3 days ago"
 
-export const BlogCard = ({
-  poster,
-  tag,
-  title,
-  description,
-  userName,
-  avatar,
-  postedAt,
-}) => {
+export const BlogCard = ({ poster, tag, title, description, userName, avatar, postedAt }) => {
   return (
     <Card>
       <img src={poster} alt="userphoto" width={200} />
@@ -35,6 +27,7 @@ export const BlogCard = ({
           <AiOutlineSearch />
           Search
         </Button>
+        <Button fancy={true}>Fancy</Button>
       </ButtonContainer>
     </Card>
   );
