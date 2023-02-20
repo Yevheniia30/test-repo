@@ -117,6 +117,7 @@ const Students = () => {
   //     });
   // }
 
+  // спрацьовує лише коли змінюється або пропи, тому якщо в стейті тільки цей масив, перевірка не потрібно, а якщо є ще (як в дз) фільтр або якийсь інший стейт, то потрібно перевірити чи змінився саме масив
   // componentDidUpdate(prevProps, prevState) {
   //   const { users } = this.state;
   //   if (prevState.users !== users) {
@@ -206,6 +207,18 @@ const Students = () => {
   //   //   phone: '',
   //   // });
   // };
+
+  // addUser=(data)=>{
+  //   this.setState(prev=>{
+  //     const new={
+  //       id: nanoid(4),
+  //       ...data
+  //     }
+  //     return {
+  //       users: [prev.users, new]
+  //     }
+  //   })
+  // }
 
   // onLoadMore = () => {
   //   this.setState(prev => ({

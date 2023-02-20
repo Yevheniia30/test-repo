@@ -29,6 +29,6 @@ export default Button;
 Button.propTypes = {
   children: Prop.node.isRequired,
   // коли потрібно вказати можливі варіанти (іноді потрібно вказати всі можливі варіанти)
-  type: Prop.oneOf(['submit', 'reset', 'button']).isRequired,
+  type: Prop.oneOf(['submit', 'reset', 'button']),
   // type: Prop.string.isRequired,
 };

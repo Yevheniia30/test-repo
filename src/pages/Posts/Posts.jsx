@@ -27,14 +27,27 @@ class Posts extends Component {
 
   // ========================
 
+  // componentDidMount() {
+  //   fetch('https://jsonplaceholder.typicode.com/posts')
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       this.setState({
+  //         posts: res,
+  //       });
+  //     });
+  // }
+
   componentDidMount() {
+    console.log('componentDidMount');
     this.handleGetPosts();
   }
 
   componentDidUpdate(_, prevState) {
-    if (prevState.page !== this.state.page || prevState?.limit !== this.state.limit) {
-      this.handleGetPosts();
-    }
+    console.log('componentDidUpdate');
+
+    // if (prevState.page !== this.state.page || prevState?.limit !== this.state.limit) {
+    //   this.handleGetPosts();
+    // }
   }
 
   handleGetPosts = async () => {
@@ -73,6 +86,7 @@ class Posts extends Component {
   };
 
   render() {
+    // console.log('render');
     const { posts, loading, error, page, limit } = this.state;
 
     return (

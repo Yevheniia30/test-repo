@@ -4,6 +4,7 @@ import { useForm } from 'hooks/useForm';
 
 import local from '../../local/local.json';
 import { LangContext } from '../../context/LangContext';
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 const init = {
   name: '',
@@ -64,6 +65,14 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
 
   // ==============СLASSS============================
   // state = { ...INITIAL_STATE };
+
+  // static defaultProps={
+  //   onSubmit: ()=>{}
+  // }
+
+  // static propTypes={
+  //   onSubmit: PropTypes.func
+  // }
 
   //   якщо форма не контрольована то метод зміни полів форми не потрібен (бо значення потрібно знати лише під час сабміту)
   // handleChange = e => {

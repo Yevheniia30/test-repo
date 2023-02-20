@@ -22,11 +22,11 @@ export class Statistics extends Component {
     }));
   };
 
-  handleClick = i => {
+  handleClick(i) {
     this.setState({
       activeIndex: i,
     });
-  };
+  }
 
   // handleClickOverlay = e => {
   //   console.log('e', e.target);
