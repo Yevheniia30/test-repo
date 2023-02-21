@@ -148,3 +148,12 @@ class Photos extends Component {
 }
 
 export default Photos;
+
+// toggle = newValue => {
+//   this.setState({
+//     isOpen: newValue,
+//   });
+// };
+
+// <button onClick={this.toggle(true)}></button>
+// <button onClick={this.toggle(false)}></button>
