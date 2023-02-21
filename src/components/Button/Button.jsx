@@ -15,7 +15,7 @@ const Button = ({
       {fancy ? (
         <FancyButton>{children}</FancyButton>
       ) : (
-        <StyledButton type={type} add={add} disabled={disabled} onClick={propClick}>
+        <StyledButton id="btn" type={type} add={add} disabled={disabled} onClick={propClick}>
           {Icon && <Icon width="50px" />}
           {children}
         </StyledButton>

@@ -1,38 +1,21 @@
-import { Modal } from 'components/Modal/Modal';
-import { Component } from 'react';
 import PhotosItem from './PhotosItem';
+import styled from 'styled-components';
 
-class PhotosList extends Component {
-  //   state = {
-  //     isOpen: false,
-  //   };
+const List = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 30px;
+`;
 
-  //   handleOpen = () => {
-  //     this.setState(prev => ({
-  //       isOpen: !prev.isOpen,
-  //     }));
-  //   };
-
-  render() {
-    const { photos } = this.props;
-    // const { isOpen } = this.state;
-    return (
-      <ul>
-        {photos.map(item => (
-          //   <li key={id} onClick={this.handleOpen}>
-          //     <img src={thumbnailUrl} alt={title} />
-          //     <p>{title}</p>
-          //     {isOpen && (
-          //       <Modal>
-          //         <img src={url} alt={title} />
-          //       </Modal>
-          //     )}
-          //   </li>
-          <PhotosItem key={item.id} {...item} />
-        ))}
-      </ul>
-    );
-  }
-}
+const PhotosList = ({ photos = [] }) => {
+  return (
+    <List id="list">
+      {photos.map(item => (
+        <PhotosItem key={item.id} {...item} />
+      ))}
+    </List>
+  );
+};
 
 export default PhotosList;

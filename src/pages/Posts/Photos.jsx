@@ -1,9 +1,11 @@
 // import axios from 'axios';
 import { fetch } from 'services/photos';
 import Button from 'components/Button/Button';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PhotosList from './PhotosList';
 import PhotosSearch from './PhotosSearch';
+
+const element = document.getElementById('btn');
 
 class Photos extends Component {
   state = {
@@ -11,11 +13,16 @@ class Photos extends Component {
     loading: false,
     error: null,
     page: 1,
+    q: '',
+    limit: 12,
+    isBtnVisible: true,
   };
+  listRef = React.createRef();
 
   //   search by q
 
   componentDidMount() {
+    // window.addEventListener('scroll', this.onScroll);
     // fetch('https://jsonplaceholder.typicode.com/photos?_limit=12')
     //   .then(response => response.json())
     //   .then(res => {
@@ -48,7 +55,8 @@ class Photos extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { page } = this.state;
+    console.log('componentDidUpdate photos');
+    const { page, q } = this.state;
     // if (prevState.page !== page) {
     //   this.setState({
     //     loading: true,
@@ -72,7 +80,7 @@ class Photos extends Component {
     //       })
     //     );
     // }
-    if (prevState.page !== page) {
+    if (prevState.page < page || prevState.q !== q) {
       this.fetchPhotos();
     }
   }
@@ -105,16 +113,26 @@ class Photos extends Component {
   //   }
   //   async await
   async fetchPhotos() {
-    const { page } = this.state;
+    const { page, q, limit } = this.state;
     try {
       //   const { data } = await axios(
       //     `https://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=12`
       //   );
       //   винесли запит окремо
-      const data = await fetch(page);
+      const data = await fetch(page, q);
+      if (data?.length < limit) {
+        this.setState({
+          isBtnVisible: false,
+        });
+      }
       this.setState(prev => ({
         photos: [...prev.photos, ...data],
       }));
+      setTimeout(() => {
+        this.onScroll();
+      }, 1000);
+      // element.scrollIntoView();
+      // window.scrollTo(element);
     } catch (error) {
       this.setState({
         error: error,
@@ -126,23 +144,63 @@ class Photos extends Component {
     }
   }
 
-  handleSubmit = () => {};
+  handleSubmit = query => {
+    if (query === this.state.q) {
+      return;
+    }
+    this.setState({
+      q: query,
+      photos: [],
+      page: 1,
+      isBtnVisible: true,
+    });
+  };
 
   handleLoadMore = () =>
     this.setState(prev => ({
       page: prev.page + 1,
     }));
 
+  onScroll() {
+    console.log(
+      'document.documentElement.scrollHeight',
+      document.documentElement.scrollHeight,
+      window.innerHeight,
+      window.scrollY
+      // element.getBoundingClientRect().top + window.scrollY
+    );
+    window.scroll({
+      // top: element.getBoundingClientRect().top + window.scrollY,
+      top: document.documentElement.scrollHeight - window.innerHeight,
+      // top: 1076,
+      behavior: 'smooth',
+    });
+    // element.scrollIntoView();
+    // window.scrollTo({
+    //   top: document.documentElement.scrollHeight,
+    //   // bottom: 0,
+    //   // top: window.innerHeight,
+
+    //   behavior: 'smooth',
+    // });
+  }
+
   render() {
-    const { photos, loading, error } = this.state;
+    console.log('listref', this.listRef);
+    console.log('element', element);
+
+    const { photos, loading, error, isBtnVisible } = this.state;
     return (
-      <>
+      <div ref={this.listRef}>
         <PhotosSearch onSubmit={this.handleSubmit} />
         <PhotosList photos={photos} />
         {loading && <b>.....Loader</b>}
         {error && <p>{error.message}</p>}
-        {photos?.length > 0 && <Button propClick={this.handleLoadMore}>Load more</Button>}
-      </>
+        {photos?.length > 0 && isBtnVisible && (
+          <Button propClick={this.handleLoadMore}>Load more</Button>
+        )}
+        {/* <Button onClick={() => window.scrollTo(0, 250)}>click to scroll</Button> */}
+      </div>
     );
   }
 }

@@ -1,41 +1,43 @@
 .Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  
-  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 1200;
-  
-  }
-  
-  .Modal {
-      width: 300px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: #cecece;
-      border-radius: 6px;
-  
-      
-    /* max-width: calc(100vw - 48px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1200;
+}
+
+.Modal {
+  /* max-width: 1000px;
+      max-height: 1000px; */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #cecece;
+  border-radius: 6px;
+  position: relative;
+
+  /* max-width: calc(100vw - 48px);
     max-height: calc(100vh - 24px); */
-  }
-  .btn{      
-      align-self: flex-end;
-      border: none;
-      margin-right: 15px;
-      background-color: #cecece;
-  }
-  .icon{
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-  }
+}
+.btn {
+  align-self: flex-end;
+  border: none;
+  margin-right: 15px;
+  background-color: #cecece;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}

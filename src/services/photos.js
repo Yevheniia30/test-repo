@@ -8,12 +8,16 @@ const instance = axios.create({
   //   },
 });
 
-export const fetch = async (page = 1, limit = 12) => {
+export const fetch = async (page = 1, q, limit = 12, sort = 'title') => {
+  const params = { _page: page, _sort: sort, _limit: limit };
+  if (q) params.q = q;
   const { data } = await instance('/', {
-    params: {
-      _page: page,
-      //   _limit: limit,
-    },
+    params,
+    // params: {
+    //   _page: page,
+    //   _sort: sort,
+    //   _limit: limit,
+    // },
   });
   return data;
 };
