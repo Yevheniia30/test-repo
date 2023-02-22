@@ -38,6 +38,8 @@ const Students = () => {
   const { lang } = useLang();
 
   // const [users, setUsers] = useState([]);
+
+  // якщо записувати дані з лс одразу в стейт а не брати їх при монтуванні, вони відрендеряться одразу, а не спочатку пустий масив, а потім дані
   const [users, setUsers] = useState(() => {
     return JSON.parse(localStorage.getItem('users')) ?? [];
   });
@@ -49,8 +51,6 @@ const Students = () => {
   const isLogin = useAuth();
   // const users1 = useSelector(getUsers);
 
-  // const [users, setUsers] = useState([])
-  // const [users, setUsers] = useState([])
   // const [users, setUsers] = useState([])
 
   // useEffect(() => {

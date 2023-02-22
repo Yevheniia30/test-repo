@@ -9,13 +9,21 @@ const Button = ({
   children,
   propClick,
   fancy = false,
+  name,
 }) => {
   return (
     <>
       {fancy ? (
         <FancyButton>{children}</FancyButton>
       ) : (
-        <StyledButton id="btn" type={type} add={add} disabled={disabled} onClick={propClick}>
+        <StyledButton
+          name={name}
+          id="btn"
+          type={type}
+          add={add}
+          disabled={disabled}
+          onClick={propClick}
+        >
           {Icon && <Icon width="50px" />}
           {children}
         </StyledButton>

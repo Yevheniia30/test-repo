@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Modal } from 'components/Modal/Modal';
 import styled from 'styled-components';
 
-const Item = styled.li`
+export const Item = styled.li`
   display: flex;
   align-items: center;
   justify-content: center;

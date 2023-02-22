@@ -134,7 +134,7 @@ export const App = () => {
         />
         <hr /> */}
           {/* <GoodsList /> */}
-          {/* <Basket /> */}
+          <Basket />
 
           {/* <hr /> */}
           {/* <ForbesList list={forbes} /> */}

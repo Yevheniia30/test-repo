@@ -33,6 +33,14 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
   //   setPhone(e.target.value);
   // };
 
+  // for state as object
+  // const handleChange = ({ target: { name, value } }) => {
+  //   setState({
+  //     ...state,
+  //     [name]: value,
+  //   });
+  // };
+
   // const handleSubmit = e => {
   //   e.preventDefault();
   //   onSubmit({ name, phone, id: nanoid(4) });

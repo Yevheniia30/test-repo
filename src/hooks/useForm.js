@@ -5,16 +5,6 @@ export const useForm = (onSubmit, initialValues, id, onClose) => {
   // створює стан і фугкції і повертає на основі того даних  що отримує
   const [state, setState] = useState(initialValues);
 
-  // const [phone, setPhone] = useState('');
-
-  // const handleChangeName = e => {
-  //   setName(e.target.value);
-  // };
-
-  // const handleChangePhone = e => {
-  //   setPhone(e.target.value);
-  // };
-
   const handleChange = e => {
     const { name, value } = e.target;
     setState(prev => ({
