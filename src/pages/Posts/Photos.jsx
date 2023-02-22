@@ -16,6 +16,7 @@ class Photos extends Component {
     q: '',
     limit: 12,
     isBtnVisible: true,
+    status: 'idle',
   };
   listRef = React.createRef();
 
@@ -115,18 +116,20 @@ class Photos extends Component {
   async fetchPhotos() {
     const { page, q, limit } = this.state;
     try {
+      this.setState({ status: 'pending' });
       //   const { data } = await axios(
       //     `https://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=12`
       //   );
       //   винесли запит окремо
       const data = await fetch(page, q);
-      if (data?.length < limit) {
-        this.setState({
-          isBtnVisible: false,
-        });
-      }
+      // if (data?.length < limit) {
+      //   this.setState({
+      //     isBtnVisible: false,
+      //   });
+      // }
       this.setState(prev => ({
         photos: [...prev.photos, ...data],
+        status: 'success',
       }));
       setTimeout(() => {
         this.onScroll();
@@ -135,7 +138,8 @@ class Photos extends Component {
       // window.scrollTo(element);
     } catch (error) {
       this.setState({
-        error: error,
+        error: error.message || 'smth went wrong',
+        status: 'error',
       });
     } finally {
       this.setState({
@@ -162,44 +166,33 @@ class Photos extends Component {
     }));
 
   onScroll() {
-    console.log(
-      'document.documentElement.scrollHeight',
-      document.documentElement.scrollHeight,
-      window.innerHeight,
-      window.scrollY
-      // element.getBoundingClientRect().top + window.scrollY
-    );
+    // console.log(
+    //   'document.documentElement.scrollHeight',
+    //   document.documentElement.scrollHeight,
+    //   window.innerHeight,
+    //   window.scrollY
+    // );
     window.scroll({
-      // top: element.getBoundingClientRect().top + window.scrollY,
       top: document.documentElement.scrollHeight - window.innerHeight,
-      // top: 1076,
       behavior: 'smooth',
     });
-    // element.scrollIntoView();
-    // window.scrollTo({
-    //   top: document.documentElement.scrollHeight,
-    //   // bottom: 0,
-    //   // top: window.innerHeight,
-
-    //   behavior: 'smooth',
-    // });
   }
 
   render() {
     console.log('listref', this.listRef);
     console.log('element', element);
 
-    const { photos, loading, error, isBtnVisible } = this.state;
+    const { photos, status, error, isBtnVisible, q } = this.state;
     return (
       <div ref={this.listRef}>
         <PhotosSearch onSubmit={this.handleSubmit} />
-        <PhotosList photos={photos} />
-        {loading && <b>.....Loader</b>}
-        {error && <p>{error.message}</p>}
+        {photos.length > 0 && <PhotosList photos={photos} />}
+        {status === 'success' && !photos.length && <p>Nothing was found with name {q}</p>}
+        {status === 'pending' && <b>.....Loader</b>}
+        {status === 'error' && error && <p>{error.message}</p>}
         {photos?.length > 0 && isBtnVisible && (
           <Button propClick={this.handleLoadMore}>Load more</Button>
         )}
-        {/* <Button onClick={() => window.scrollTo(0, 250)}>click to scroll</Button> */}
       </div>
     );
   }
