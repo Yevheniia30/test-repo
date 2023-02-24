@@ -18,10 +18,6 @@ const LangSwitcher = () => {
       <span onClick={switchLang} className={lang === 'en' ? styles.currentLang : styles.lang}>
         EN
       </span>
-      {/* |
-      <span onClick={switchLang} className={lang === 'en' ? styles.currentLang : styles.lang}>
-        RU
-      </span> */}
     </div>
   );
 };

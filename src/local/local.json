@@ -1,9 +1,5 @@
 {
-    "title": {
-        "en": "Users",
-        "ua": "Користувачі",
-        "ru": "Пользователи"
-    },
+
     "name":{
         "en": "Name",
         "ua": "Ім'я"
@@ -15,6 +11,10 @@
     "add":{
         "en": "Add",
         "ua": "Додати"
+    },
+    "addToFavorites":{
+        "en": "Add to favorites",
+        "ua": "Додати в обрані"
     },
     "del":{
         "en": "Delete",

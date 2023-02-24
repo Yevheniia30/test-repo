@@ -39,6 +39,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { current } from 'redux/auth/authOperations';
 import Photos from 'pages/Posts/Photos';
+import Clock from './Clock/Clock';
 // export const LangContext = createContext('UA');
 // const AppWrapper = styled.div`
 //   margin: ${({ theme }) => theme.spaces[0]} auto;
@@ -66,33 +67,33 @@ export const App = () => {
   //   dispatch(current());
   // }, [dispatch]);
 
-  const salaries1 = {
-    Manager: { salary: 1000, tax: '10%' },
-    Designer: { salary: 600, tax: '30%' },
-    Artist: { salary: 1500, tax: '15%' },
-  };
-  const team1 = [
-    { name: 'Misha', specialization: 'Manager' },
-    { name: 'Max', specialization: 'Designer' },
-    { name: 'Vova', specialization: 'Designer' },
-    { name: 'Leo', specialization: 'Artist' },
-  ];
-  const financeReport1 = calculateTeamFinanceReport(salaries1, team1);
-  console.log(JSON.stringify(financeReport1));
+  // const salaries1 = {
+  //   Manager: { salary: 1000, tax: '10%' },
+  //   Designer: { salary: 600, tax: '30%' },
+  //   Artist: { salary: 1500, tax: '15%' },
+  // };
+  // const team1 = [
+  //   { name: 'Misha', specialization: 'Manager' },
+  //   { name: 'Max', specialization: 'Designer' },
+  //   { name: 'Vova', specialization: 'Designer' },
+  //   { name: 'Leo', specialization: 'Artist' },
+  // ];
+  // const financeReport1 = calculateTeamFinanceReport(salaries1, team1);
+  // console.log(JSON.stringify(financeReport1));
 
-  const salaries2 = {
-    TeamLead: { salary: 1000, tax: '99%' },
-    Architect: { salary: 9000, tax: '34%' },
-  };
-  const team2 = [
-    { name: 'Alexander', specialization: 'TeamLead' },
-    { name: 'Gaudi', specialization: 'Architect' },
-    { name: 'Koolhas', specialization: 'Architect' },
-    { name: 'Foster', specialization: 'Architect' },
-    { name: 'Napoleon', specialization: 'General' },
-  ];
-  const financeReport2 = calculateTeamFinanceReport(salaries2, team2);
-  console.log(JSON.stringify(financeReport2));
+  // const salaries2 = {
+  //   TeamLead: { salary: 1000, tax: '99%' },
+  //   Architect: { salary: 9000, tax: '34%' },
+  // };
+  // const team2 = [
+  //   { name: 'Alexander', specialization: 'TeamLead' },
+  //   { name: 'Gaudi', specialization: 'Architect' },
+  //   { name: 'Koolhas', specialization: 'Architect' },
+  //   { name: 'Foster', specialization: 'Architect' },
+  //   { name: 'Napoleon', specialization: 'General' },
+  // ];
+  // const financeReport2 = calculateTeamFinanceReport(salaries2, team2);
+  // console.log(JSON.stringify(financeReport2));
 
   // console.log('calculateTeamFinanceReport', calculateTeamFinanceReport(salaries1, team1));
 
@@ -103,7 +104,8 @@ export const App = () => {
         {' '}
         <Box m={5} width="xl">
           <NavBar />
-          <Photos />
+          <Clock />
+          {/* <Photos /> */}
           {/* <Posts /> */}
           {/* <Routes> */}
           {/* <Route path="/" element={<Home />} /> */}
@@ -134,7 +136,7 @@ export const App = () => {
         />
         <hr /> */}
           {/* <GoodsList /> */}
-          <Basket />
+          {/* <Basket /> */}
 
           {/* <hr /> */}
           {/* <ForbesList list={forbes} /> */}

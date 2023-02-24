@@ -1,6 +1,6 @@
 import { fetch } from 'services/photos';
 import Button from 'components/Button/Button';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PhotosList from './PhotosList';
 import PhotosSearch from './PhotosSearch';
 import PhotosView from './PhotosView';
@@ -34,8 +34,14 @@ const Photos = () => {
   //   fetchPhotos();
   // }, []);
 
+  const ref = useRef(true);
+
   useEffect(() => {
-    console.log('next');
+    if (ref.current) {
+      ref.current = false;
+      return;
+    }
+    console.log('first', ref);
     const fetchPhotos = async () => {
       try {
         setStatus('pending');

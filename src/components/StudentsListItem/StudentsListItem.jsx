@@ -13,8 +13,6 @@ import StudentsForm from 'components/StudentsForm/StudentsForm';
 const StudentsListItem = ({ id, name, number, onDelete, onUpdate }) => {
   const [openModal, setOpenModal] = useState(false);
 
-  // console.log('sum', sum);
-
   // console.log('render', name);
   const { lang } = useContext(LangContext);
   const del = local.del[lang];
