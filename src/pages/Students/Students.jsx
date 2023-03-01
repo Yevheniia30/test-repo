@@ -82,6 +82,7 @@ const Students = () => {
     // setUsers(prev => [userData, ...prev]);
   };
 
+  // додавання і фільтрація в useCallback не загортаємо так як вони матисуть в залежностях масив а він постійно змінюєтьсяі
   const handleDelete = useCallback(
     id => {
       dispatch(removeUser(id));
@@ -89,6 +90,7 @@ const Students = () => {
       // setUsers(prev => prev.filter(item => item.id !== id));
     },
     [dispatch]
+    // [setUsers]
   );
 
   const onFilter = e => {
@@ -232,7 +234,7 @@ const Students = () => {
 
   // console.log('students', users);
 
-  const title = local.title[lang];
+  // const title = local.title[lang];
 
   const filtered = () => {
     if (filter) {
@@ -253,7 +255,7 @@ const Students = () => {
           <input type="text" value={filter} onChange={onFilter} />
           <StudentsList
             students={filtered()}
-            title={title}
+            // title={title}
             onDelete={handleDelete}
             onUpdate={handleUpdate}
           />

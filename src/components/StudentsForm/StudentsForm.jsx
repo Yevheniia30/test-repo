@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useContext, useMemo } from 'react';
+import { useState, useRef, useEffect, useContext, useMemo, memo } from 'react';
 import { nanoid } from 'nanoid';
 import { useForm } from 'hooks/useForm';
 
@@ -134,7 +134,7 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
   // };
 
   // console.log('initialstate', initialValues);
-
+  console.log('render form');
   return (
     // контрольована форма
     // форма має бути окремий компонентом зі своїм станом в якому зберігаються значення полів форми
@@ -216,4 +216,4 @@ const StudentsForm = ({ onSubmit, userToEdit, id, onClose }) => {
   );
 };
 
-export default StudentsForm;
+export default memo(StudentsForm);

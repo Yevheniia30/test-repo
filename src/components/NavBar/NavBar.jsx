@@ -19,6 +19,11 @@ const StyledLink = styled(NavLink)`
   text-decoration: none;
 `;
 
+// const getClass = props => {
+// const className = isAcive ? s.activeLink : s.link;
+// return className;
+// }
+
 const navArray = [
   { to: '/', name: 'HOME' },
   // { to: '/posts', name: 'POSTS' },
@@ -34,6 +39,7 @@ const NavBar = () => {
       <nav>
         <StyledLink to="/">HOME</StyledLink>
         <StyledLink to="/users">USERS</StyledLink>
+        <StyledLink to="/heroes">HEROES</StyledLink>
         {isLogin ? <UserMenu /> : <AuthMenu />}
 
         {/* {navArray.map(item => (

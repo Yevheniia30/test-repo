@@ -40,6 +40,7 @@ import { useEffect } from 'react';
 import { current } from 'redux/auth/authOperations';
 import Photos from 'pages/Posts/Photos';
 import Clock from './Clock/Clock';
+import HeroesPage from 'pages/HeroesPage/HeroesPage';
 // export const LangContext = createContext('UA');
 // const AppWrapper = styled.div`
 //   margin: ${({ theme }) => theme.spaces[0]} auto;
@@ -104,28 +105,28 @@ export const App = () => {
         {' '}
         <Box m={5} width="xl">
           <NavBar />
-          <Clock />
+          {/* <Students /> */}
+          {/* <Clock /> */}
           {/* <Photos /> */}
           {/* <Posts /> */}
-          {/* <Routes> */}
-          {/* <Route path="/" element={<Home />} /> */}
-          {/* <Route element={<PrivateRoute />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route element={<PrivateRoute />}>
               <Route path="/users" element={<Students />} />
             </Route>
             <Route element={<PublicRoute />}>
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<Login />} />
-            </Route> */}
+            </Route>
 
-          {/* <Route element={<PublicRoute />}></Route> */}
+            <Route path="/heroes" element={<HeroesPage />} />
+            <Route path="*" element={<Navigate to="/" />} />
 
-          {/* <Route path="*" element={<Navigate to="/" />} /> */}
+            {/* <Home /> */}
+            {/* <Students /> */}
+            {/* <FormikForm /> */}
 
-          {/* <Home /> */}
-          {/* <Students /> */}
-          {/* <FormikForm /> */}
-
-          {/* <BlogCard
+            {/* <BlogCard
           poster={article.poster}
           tag={article.tag}
           title={article.title}
@@ -135,13 +136,13 @@ export const App = () => {
           postedAt={article.postedAt}
         />
         <hr /> */}
-          {/* <GoodsList /> */}
-          {/* <Basket /> */}
+            {/* <GoodsList /> */}
+            {/* <Basket /> */}
 
-          {/* <hr /> */}
-          {/* <ForbesList list={forbes} /> */}
-          {/* <TransactionHistory items={items} /> */}
-          {/* </Routes> */}
+            {/* <hr /> */}
+            {/* <ForbesList list={forbes} /> */}
+            {/* <TransactionHistory items={items} /> */}
+          </Routes>
           {/* <BlogCard {...article} /> */}
           {/* <Statistics /> */}
           {/* <Statistics title="Main statistics" stats={data} /> */}
