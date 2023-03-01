@@ -41,6 +41,7 @@ import { current } from 'redux/auth/authOperations';
 import Photos from 'pages/Posts/Photos';
 import Clock from './Clock/Clock';
 import HeroesPage from 'pages/HeroesPage/HeroesPage';
+import HeroPage from 'pages/HeroPage/HeroPage';
 // export const LangContext = createContext('UA');
 // const AppWrapper = styled.div`
 //   margin: ${({ theme }) => theme.spaces[0]} auto;
@@ -120,6 +121,7 @@ export const App = () => {
             </Route>
 
             <Route path="/heroes" element={<HeroesPage />} />
+            <Route path="/heroes/:id" element={<HeroPage />} />
             <Route path="*" element={<Navigate to="/" />} />
 
             {/* <Home /> */}
