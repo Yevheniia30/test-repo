@@ -8,7 +8,7 @@ const HeroesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get('page') ?? 1;
   // const limit = searchParams.get('limit');
-  // gjgj
+
   console.log('searchParams', searchParams);
 
   useEffect(() => {

@@ -42,6 +42,8 @@ import Photos from 'pages/Posts/Photos';
 import Clock from './Clock/Clock';
 import HeroesPage from 'pages/HeroesPage/HeroesPage';
 import HeroPage from 'pages/HeroPage/HeroPage';
+import ProductPage from 'pages/ProductPage/ProductPage';
+import BasketPage from 'pages/BasketPage/BasketPage';
 // export const LangContext = createContext('UA');
 // const AppWrapper = styled.div`
 //   margin: ${({ theme }) => theme.spaces[0]} auto;
@@ -111,17 +113,19 @@ export const App = () => {
           {/* <Photos /> */}
           {/* <Posts /> */}
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route element={<PrivateRoute />}>
+            {/* <Route path="/" element={<Home />} /> */}
+            {/* <Route element={<PrivateRoute />}>
               <Route path="/users" element={<Students />} />
-            </Route>
-            <Route element={<PublicRoute />}>
+            </Route> */}
+            {/* <Route element={<PublicRoute />}>
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<Login />} />
-            </Route>
+            </Route> */}
 
             <Route path="/heroes" element={<HeroesPage />} />
             <Route path="/heroes/:id" element={<HeroPage />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/basket" element={<BasketPage />} />
             <Route path="*" element={<Navigate to="/" />} />
 
             {/* <Home /> */}

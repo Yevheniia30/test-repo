@@ -33,14 +33,16 @@ const navArray = [
 
 const NavBar = () => {
   // const isLogin = useSelector(selectIsLogin);
-  const isLogin = useAuth();
+  // const isLogin = useAuth();
   return (
     <header>
       <nav>
-        <StyledLink to="/">HOME</StyledLink>
-        <StyledLink to="/users">USERS</StyledLink>
+        {/* <StyledLink to="/">HOME</StyledLink> */}
+        {/* <StyledLink to="/users">USERS</StyledLink> */}
         <StyledLink to="/heroes">HEROES</StyledLink>
-        {isLogin ? <UserMenu /> : <AuthMenu />}
+        <StyledLink to="/products">PRODUCTS</StyledLink>
+        <StyledLink to="/basket">BASKET</StyledLink>
+        {/* {isLogin ? <UserMenu /> : <AuthMenu />} */}
 
         {/* {navArray.map(item => (
           <StyledLink key={item.to} to={item.to} exact={item.exact}>
