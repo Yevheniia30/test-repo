@@ -31,7 +31,7 @@ const ProductPage = () => {
   const handleAddProduct = payload => {
     const isAdded = basket.find(item => item.id === payload.id);
     if (isAdded) {
-      dispatch(addQuantity(payload.id));
+      dispatch(addQuantity({ id: payload.id, add: true }));
       return;
     }
     const action = addProduct(payload);

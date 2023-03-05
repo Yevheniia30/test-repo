@@ -40,15 +40,18 @@ const productSlice = createSlice({
       store.search = payload;
     },
     addQuantity: (store, { payload }) => {
+      console.log('payload add', payload);
       store.cart = store.cart.map(item =>
-        item.id === payload ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === payload.id
+          ? { ...item, quantity: payload.add ? item.quantity + 1 : item.quantity - 1 }
+          : item
       );
     },
-    decrQuantity: (store, { payload }) => {
-      store.cart = store.cart.map(item =>
-        item.id === payload ? { ...item, quantity: item.quantity - 1 } : item
-      );
-    },
+    // decrQuantity: (store, { payload }) => {
+    //   store.cart = store.cart.map(item =>
+    //     item.id === payload ? { ...item, quantity: item.quantity - 1 } : item
+    //   );
+    // },
   },
 });
 

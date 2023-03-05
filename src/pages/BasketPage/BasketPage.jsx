@@ -12,14 +12,15 @@ const BasketPage = () => {
   };
 
   const handleAddQuantity = id => {
-    dispatch(addQuantity(id));
+    dispatch(addQuantity({ id, add: true }));
   };
   const handleDecrQuantity = i => {
     if (i.quantity === 1) {
       dispatch(removeProduct(i.id));
       return;
     }
-    dispatch(decrQuantity(i.id));
+    // dispatch(decrQuantity(i.id));
+    dispatch(addQuantity(i));
   };
 
   const elements = products?.map(i => (
