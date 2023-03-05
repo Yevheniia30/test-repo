@@ -113,7 +113,7 @@ export const App = () => {
           {/* <Photos /> */}
           {/* <Posts /> */}
           <Routes>
-            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<Home />} />
             {/* <Route element={<PrivateRoute />}>
               <Route path="/users" element={<Students />} />
             </Route> */}

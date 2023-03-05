@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import { useSelector } from 'react-redux';
 import LangSwitcher from 'components/LangSwitcher/LangSwitcher';
 import styled from 'styled-components';
@@ -34,6 +35,10 @@ const navArray = [
 const NavBar = () => {
   // const isLogin = useSelector(selectIsLogin);
   // const isLogin = useAuth();
+  const cart = useSelector(state => state.cart);
+  const sum = cart.reduce((acc, value) => acc + parseInt(value.price) * value.quantity, 0);
+  const quantity = cart.reduce((acc, value) => acc + value.quantity, 0);
+
   return (
     <header>
       <nav>
@@ -42,6 +47,13 @@ const NavBar = () => {
         <StyledLink to="/heroes">HEROES</StyledLink>
         <StyledLink to="/products">PRODUCTS</StyledLink>
         <StyledLink to="/basket">BASKET</StyledLink>
+        {cart?.length ? (
+          <span>
+            {quantity}|{sum}
+          </span>
+        ) : (
+          <span>Basket is empty</span>
+        )}
         {/* {isLogin ? <UserMenu /> : <AuthMenu />} */}
 
         {/* {navArray.map(item => (
