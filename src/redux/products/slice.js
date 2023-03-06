@@ -20,6 +20,7 @@ const productSlice = createSlice({
     //   return { ...store, cart: [...store.cart, payload] };
     // },
     // додаємо quantity
+    // якщо працюэмо з стор, то всякі додаткові дії (додавання айді і тд) потрібно робити також в сторі
     addProduct: {
       reducer: (store, { payload }) => {
         store.cart.push(payload);

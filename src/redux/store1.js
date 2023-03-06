@@ -2,6 +2,8 @@ import { createStore, combineReducers } from 'redux';
 //
 import { configureStore } from '@reduxjs/toolkit';
 import { createReducer } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { addProduct, removeProduct, searchProducts } from './products/actions';
 import { ADD_PRODUCT, REMOVE_PRODUCT, SEARCH_PRODUCT } from './products/types';
 import productReducer from './products/slice';
@@ -91,14 +93,25 @@ const rootReducer = combineReducers({
 //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 // );
 
-const storage = configureStore({
+const persistConfig = {
+  key: 'products',
+  storage,
+  whitelist: ['cart'],
+};
+
+const persistedReducer = persistReducer(persistConfig, productReducer);
+
+export const storage1 = configureStore({
   // reducer: {
   //   cart: basketReducer,
   //   search: searchReducer,
   // },
-  reducer: productReducer,
+  // reducer: productReducer,
+  reducer: persistedReducer,
 });
 
-export default storage;
+export const persistor = persistStore(storage1);
+
+// export default storage1;
 
 console.log(storage.getState());
