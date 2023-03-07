@@ -113,7 +113,7 @@ export const App = () => {
           {/* <Photos /> */}
           {/* <Posts /> */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            {/* <Route path="/" element={<Home />} /> */}
             {/* <Route element={<PrivateRoute />}>
               <Route path="/users" element={<Students />} />
             </Route> */}
@@ -126,7 +126,7 @@ export const App = () => {
             <Route path="/heroes/:id" element={<HeroPage />} />
             <Route path="/products" element={<ProductPage />} />
             <Route path="/basket" element={<BasketPage />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            {/* <Route path="*" element={<Navigate to="/" />} /> */}
 
             {/* <Home /> */}
             {/* <Students /> */}

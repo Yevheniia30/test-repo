@@ -35,7 +35,7 @@ const navArray = [
 const NavBar = () => {
   // const isLogin = useSelector(selectIsLogin);
   // const isLogin = useAuth();
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart.cart);
   const sum = cart.reduce((acc, value) => acc + parseInt(value.price) * value.quantity, 0);
   const quantity = cart.reduce((acc, value) => acc + value.quantity, 0);
 

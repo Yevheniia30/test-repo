@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeProduct, addQuantity, decrQuantity } from 'redux/products/slice';
 
 const BasketPage = () => {
-  const products = useSelector(store => store.cart);
+  const products = useSelector(store => store.cart.cart);
   const dispatch = useDispatch();
   // коли змінюється стор, перемальовується компонент який на нього підписаний
   // console.log('products', products);

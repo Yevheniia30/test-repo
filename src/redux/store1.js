@@ -2,16 +2,29 @@ import { createStore, combineReducers } from 'redux';
 //
 import { configureStore } from '@reduxjs/toolkit';
 import { createReducer } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { addProduct, removeProduct, searchProducts } from './products/actions';
 import { ADD_PRODUCT, REMOVE_PRODUCT, SEARCH_PRODUCT } from './products/types';
 import productReducer from './products/slice';
+import { productsReducer } from './products/reducer';
+import { addToCartError, addToCartLoading, addToCartSuccess } from './products/actions';
 
 const initialStore = {
   //   products: [],
-  basket: [],
+  cart: [],
   search: '',
+  loading: false,
+  error: null,
 };
 
 const reducer = (store = initialStore, action) => {
@@ -62,12 +75,25 @@ const reducer = (store = initialStore, action) => {
 
 //взявши назву екшена в квадратні дужки, ми отримуємо ...
 // immer огортає редюсер і попереджає мутації, тобто якщо нічого не повертається то іммер відловлює мутацію і перетворює її на нормальне повернення
-const basketReducer = createReducer([], {
+
+const basketReducer = createReducer(initialStore, {
   // [addProduct]: (store, action) => [...store, action.payload],
-  [addProduct]: (store, action) => {
-    store.push(action.payload);
+  // [addProduct]: (store, action) => {
+  //   store.push(action.payload);
+  // },
+  // [removeProduct]: (store, action) => store.filter(({ id }) => id !== action.payload),
+  // addtocart
+  [addToCartLoading]: store => {
+    store.loading = true;
   },
-  [removeProduct]: (store, action) => store.filter(({ id }) => id !== action.payload),
+  [addToCartSuccess]: (store, { payload }) => {
+    store.cart.push(payload);
+    store.loading = false;
+  },
+  [addToCartError]: (store, { payload }) => {
+    store.error = payload;
+    store.loading = false;
+  },
 });
 
 const searchReducer = createReducer('', {
@@ -99,7 +125,8 @@ const persistConfig = {
   whitelist: ['cart'],
 };
 
-const persistedReducer = persistReducer(persistConfig, productReducer);
+// const persistedReducer = persistReducer(persistConfig, productReducer);
+const persistedReducer = persistReducer(persistConfig, basketReducer);
 
 export const storage1 = configureStore({
   // reducer: {
@@ -107,11 +134,17 @@ export const storage1 = configureStore({
   //   search: searchReducer,
   // },
   // reducer: productReducer,
-  reducer: persistedReducer,
+  reducer: { cart: persistedReducer, products: productsReducer },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export const persistor = persistStore(storage1);
 
 // export default storage1;
 
-console.log(storage.getState());
+// console.log(storage.getState());

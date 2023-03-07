@@ -48,7 +48,7 @@ export const store = configureStore({
 });
 
 // створюємо змінну і огортаєм наш стор персістором
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);
 
 // щоб коректно працював персіст, або огортаємо персістом весь стор, або робимо початковий стан колекції не масивом, а об'єктом, тому що пересіст не застосовується до масива
 
