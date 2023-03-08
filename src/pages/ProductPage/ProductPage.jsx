@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from 'services/productsApi';
 // import { addProduct, searchProducts } from 'redux/products/actions';
 import { addProduct, searchProduct, addQuantity } from 'redux/products/slice';
-import { fetchProducts, addToCartFunc } from 'redux/products/operations';
+import {
+  fetchProducts,
+  addToCartFunc,
+  addToCartThunk,
+  fetchProductsThunk,
+} from 'redux/products/operations';
 
 const ProductPage = () => {
   // const [items, setItems] = useState([]);
@@ -16,7 +21,8 @@ const ProductPage = () => {
   // const items = useSelector(store => store.products);
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    // dispatch(fetchProducts());
+    dispatch(fetchProductsThunk());
     // const fetch = async () => {
     //   try {
     //     const { data } = await getProducts();
@@ -40,7 +46,8 @@ const ProductPage = () => {
 
     // }
     // const action = addProduct(payload);
-    const action = addToCartFunc(payload);
+    // const action = addToCartFunc(payload);
+    const action = addToCartThunk(payload);
     // console.log(action);
     dispatch(action);
   };
@@ -63,12 +70,18 @@ const ProductPage = () => {
 
   // });
 
+  const isInCart = title => {
+    return basket.find(i => i.title === title);
+  };
+
   const elements = searchProducts()?.map(i => (
     <li key={i.id}>
       <span>
         {i.title} - ${i.price}
       </span>
-      <button onClick={() => handleAddProduct(i)}>Buy</button>
+      <button disabled={isInCart(i.title)} onClick={() => handleAddProduct(i)}>
+        {isInCart(i.title) ? 'In cart' : 'Buy'}
+      </button>
     </li>
   ));
 

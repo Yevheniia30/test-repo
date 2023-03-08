@@ -15,3 +15,11 @@ export const getCart = () => {
 export const addToCart = data => {
   return instance.post('/cart', data);
 };
+
+export const deleteFromCart = id => {
+  return instance.delete(`/cart/${id}`);
+};
+
+export const changeQuantity = data => {
+  return instance.put(`/cart/${data.id}`, data);
+};

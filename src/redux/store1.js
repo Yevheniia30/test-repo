@@ -13,37 +13,33 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { addProduct, removeProduct, searchProducts } from './products/actions';
+import { searchProducts } from './products/actions';
 import { ADD_PRODUCT, REMOVE_PRODUCT, SEARCH_PRODUCT } from './products/types';
 import productReducer from './products/slice';
-import { productsReducer } from './products/reducer';
+// by createReducer
+// import { productsReducer } from './products/reducer';
+// by createSlice
+import productsReducer from './products/reducer';
+import { basketReducer } from './products/reducer';
 import { addToCartError, addToCartLoading, addToCartSuccess } from './products/actions';
 
-const initialStore = {
-  //   products: [],
-  cart: [],
-  search: '',
-  loading: false,
-  error: null,
-};
-
-const reducer = (store = initialStore, action) => {
-  switch (action.type) {
-    case ADD_PRODUCT:
-      // мутувати стор не можна тому не можна пуш
-      //   store.basket.push(action.payload);
-      // потрібно повернути новий об'єкт кстор
-      return { ...store, basket: [...store.basket, action.payload] };
-    case REMOVE_PRODUCT:
-      const updProducts = store.basket.filter(i => i.id !== action.payload);
-      return { ...store, basket: updProducts };
-    case SEARCH_PRODUCT:
-      return { ...store, search: action.payload };
-    default:
-      return store;
-  }
-  //   console.log(store);
-};
+// const reducer = (store = initialStore, action) => {
+//   switch (action.type) {
+//     case ADD_PRODUCT:
+//       // мутувати стор не можна тому не можна пуш
+//       //   store.basket.push(action.payload);
+//       // потрібно повернути новий об'єкт кстор
+//       return { ...store, basket: [...store.basket, action.payload] };
+//     case REMOVE_PRODUCT:
+//       const updProducts = store.basket.filter(i => i.id !== action.payload);
+//       return { ...store, basket: updProducts };
+//     case SEARCH_PRODUCT:
+//       return { ...store, search: action.payload };
+//     default:
+//       return store;
+//   }
+//   //   console.log(store);
+// };
 
 // 2 reducers
 // const basketReducer = (store = [], action) => {
@@ -75,26 +71,6 @@ const reducer = (store = initialStore, action) => {
 
 //взявши назву екшена в квадратні дужки, ми отримуємо ...
 // immer огортає редюсер і попереджає мутації, тобто якщо нічого не повертається то іммер відловлює мутацію і перетворює її на нормальне повернення
-
-const basketReducer = createReducer(initialStore, {
-  // [addProduct]: (store, action) => [...store, action.payload],
-  // [addProduct]: (store, action) => {
-  //   store.push(action.payload);
-  // },
-  // [removeProduct]: (store, action) => store.filter(({ id }) => id !== action.payload),
-  // addtocart
-  [addToCartLoading]: store => {
-    store.loading = true;
-  },
-  [addToCartSuccess]: (store, { payload }) => {
-    store.cart.push(payload);
-    store.loading = false;
-  },
-  [addToCartError]: (store, { payload }) => {
-    store.error = payload;
-    store.loading = false;
-  },
-});
 
 const searchReducer = createReducer('', {
   [searchProducts]: (_, action) => action.payload,
