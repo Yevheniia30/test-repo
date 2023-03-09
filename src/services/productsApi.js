@@ -22,7 +22,7 @@ export const deleteFromCart = id => {
 };
 
 export const changeQuantity = data => {
-  return instance.put(`/cart/${data._id}`, data);
+  return instance.put(`/cart/${data.id}`, data);
 };
 
 // ==========================8 module
@@ -31,6 +31,15 @@ export const getGoods = () => {
 };
 
 export const addGood = async data => {
-  const { data: result } = await authInstance('/products', data);
+  const { data: result } = await authInstance.post('/products', data);
   return result;
+};
+
+export const deleteGood = async id => {
+  await authInstance.delete(`/products/${id}`);
+  return id;
+};
+
+export const checkDeleted = data => {
+  return instance.put(`/cart/${data.id}`, data);
 };

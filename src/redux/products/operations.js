@@ -7,6 +7,8 @@ import {
   changeQuantity,
   getGoods,
   addGood,
+  deleteGood,
+  checkDeleted,
 } from 'services/productsApi';
 import {
   fetchProductsLoading,
@@ -123,9 +125,25 @@ export const addToCartThunk = createAsyncThunk(
 //   return func;
 // };
 
-export const deleteFromCartFunc = id => {
-  const func = async dispatch => {
+export const deleteFromCartFunc = (id, delFromBase = false) => {
+  const func = async (dispatch, getState) => {
     try {
+      // if (delFromBase) {
+      //   const { cart } = getState();
+      //   console.log('cart', cart);
+      //   const deletedFromBase = cart.cart.find(item => item._id === id);
+      //   if (deletedFromBase) {
+      //     try {
+      //       dispatch(deleteFromCartLoading());
+      //       await deleteFromCart(deletedFromBase.id);
+      //       dispatch(deleteFromCartSuccess(deletedFromBase.id));
+      //     } catch (error) {
+      //       dispatch(deleteFromCartError(error.message));
+      //     }
+      //   }
+      //   return;
+      // }
+
       dispatch(deleteFromCartLoading());
       await deleteFromCart(id);
       dispatch(deleteFromCartSuccess(id));
@@ -162,9 +180,49 @@ export const fetchGoods = createAsyncThunk('goods/fetch', async (_, { rejectWith
 
 export const addGoods = createAsyncThunk('goods/add', async (data, { rejectWithValue }) => {
   try {
-    const { data: result } = await addGood(data);
+    const result = await addGood(data);
     return result;
   } catch ({ response }) {
     return rejectWithValue(response.data.message);
+  }
+});
+
+export const checkDeletedThunk = createAsyncThunk(
+  'check/good',
+  async (id, { rejectWithValue, getState }) => {
+    try {
+      const { cart } = getState();
+      const deletedFromCart = cart.cart.find(item => item._id === id);
+      if (!deletedFromCart) {
+        return;
+      }
+      const newDeletedFromCart = { ...deletedFromCart, quantity: 0 };
+      const { data } = await checkDeleted(newDeletedFromCart);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+  // {
+  //   condition: (id, { getState }) => {
+  //     console.log(getState());
+  //     const { cart } = getState();
+  //     if (!cart.cart.find(item => item._id === id)) {
+  //       return false;
+  //     }
+  //   },
+  // }
+);
+
+export const deleteGoods = createAsyncThunk('goods/delete', async (id, thunkApi) => {
+  console.log('thunkApi', thunkApi.getState());
+  try {
+    const result = await deleteGood(id);
+
+    // console.log('result del', result);
+    thunkApi.dispatch(checkDeletedThunk(result));
+    return result;
+  } catch ({ response }) {
+    return thunkApi.rejectWithValue(response.data.message);
   }
 });

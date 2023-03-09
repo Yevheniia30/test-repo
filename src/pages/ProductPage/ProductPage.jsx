@@ -10,9 +10,13 @@ import {
   addToCartThunk,
   fetchProductsThunk,
   fetchGoods,
+  addGoods,
+  deleteGoods,
 } from 'redux/products/operations';
 import { selectIsLogin } from 'redux/auth/authSelectors';
 import { Navigate } from 'react-router-dom';
+import Form from 'components/Form/Form';
+import css from './ProductsPage.module.css';
 
 const ProductPage = () => {
   // const [items, setItems] = useState([]);
@@ -21,7 +25,7 @@ const ProductPage = () => {
   const basket = useSelector(state => state.cart.cart);
   const items = useSelector(state => state.products.products);
   const isLogin = useSelector(selectIsLogin);
-  console.log('basket', basket);
+  // console.log('basket', basket);
   // const items = useSelector(store => store.products);
 
   useEffect(() => {
@@ -83,24 +87,44 @@ const ProductPage = () => {
     return basket.find(i => i.title === title);
   };
 
-  const elements = items?.map(i => (
-    <li key={i._id}>
-      <span>
-        {/* {i.title} - ${i.price} */}
-        {i.name} - ${i.price}
-      </span>
-      <span>{i.description}</span>
-      <button disabled={isInCart(i.name)} onClick={() => handleAddProduct(i)}>
-        {isInCart(i.name) ? 'In cart' : 'Buy'}
-      </button>
-    </li>
+  const handleSubmit = data => {
+    dispatch(addGoods(data));
+  };
+
+  const handleDelete = id => {
+    dispatch(deleteGoods(id));
+  };
+
+  const elements = items?.map((item, idx) => (
+    <tr key={item._id}>
+      <td>{idx + 1}</td>
+      <td>{item.name}</td>
+      <td>{item.price}</td>
+      <td>{item.description}</td>
+      <td style={{ display: 'flex', gap: '5px' }}>
+        <Button add={true} disabled={isInCart(item.name)} propClick={() => handleAddProduct(item)}>
+          {isInCart(item.name) ? 'In cart' : 'Buy'}
+        </Button>
+        <Button propClick={() => handleDelete(item._id)}>Delete</Button>
+      </td>
+    </tr>
   ));
 
   return (
     <>
-      {/* <input placeholder="search" type="text" value={search} onChange={handleChange} /> */}
-      {/* <Search /> */}
-      <ul>{elements}</ul>
+      <Form onSubmit={handleSubmit} />
+      <table className={css.table}>
+        <thead className={css.head}>
+          <tr>
+            <th className={css.tstyle}>№</th>
+            <th>Найменування</th>
+            <th>Ціна</th>
+            <th>Опис</th>
+            <th>Дія</th>
+          </tr>
+        </thead>
+        <tbody>{elements}</tbody>
+      </table>
     </>
   );
 };

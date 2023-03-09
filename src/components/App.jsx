@@ -16,7 +16,6 @@ import { ForbesList } from './ForbesList/ForbesList';
 import TransactionHistory from './TransactionHistory/TransactionHistory';
 import { Box } from './Box/Box.styled';
 import { Basket } from './Basket/Basket';
-import GoodsList from './GoodsList/GoodsList';
 import Students from 'pages/Students/Students';
 import Posts from 'pages/Posts/Posts';
 import LangSwitcher from './LangSwitcher/LangSwitcher';

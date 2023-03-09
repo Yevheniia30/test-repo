@@ -16,7 +16,12 @@ import {
   fetchCartSuccess,
   removeProduct,
 } from './actions';
-import { changeQuantityThunk, addToCartThunk, fetchProductsThunk } from './operations';
+import {
+  changeQuantityThunk,
+  addToCartThunk,
+  fetchProductsThunk,
+  checkDeletedThunk,
+} from './operations';
 
 const initialState = {
   products: [],
@@ -128,7 +133,7 @@ export const basketReducer = createReducer(initialStore, {
     store.loading = true;
   },
   [deleteFromCartSuccess]: (store, { payload }) => {
-    store.cart = store.cart.filter(({ _id }) => _id !== payload);
+    store.cart = store.cart.filter(({ id }) => id !== payload);
     store.loading = false;
   },
   [deleteFromCartError]: (store, { payload }) => {
@@ -137,7 +142,11 @@ export const basketReducer = createReducer(initialStore, {
   },
   // =======  change QUANTITYTY=============
   [changeQuantityThunk.fulfilled]: (store, { payload }) => {
-    store.cart = store.cart.map(item => (item._id === payload._id ? payload : item));
+    store.cart = store.cart.map(item => (item.id === payload.id ? payload : item));
+  },
+  // ============ check deleted==============
+  [checkDeletedThunk.fulfilled]: (store, { payload }) => {
+    store.cart = store.cart.map(item => (item.id === payload.id ? payload : item));
   },
 });
 

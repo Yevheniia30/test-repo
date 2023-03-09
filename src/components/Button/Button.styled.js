@@ -12,14 +12,15 @@ export const StyledButton = styled(ButtonContainer).attrs({
 })`
   gap: ${({ theme }) => theme.spaces[2]}px;
 
-  background-color: ${props => (props.disabled ? theme.colors.muted : theme.colors.primary)};
+  background-color: ${props => (props.disabled ? theme.colors.muted : theme.colors.secondary)};
   cursor: pointer;
+  border: none;
+  border-radius: 4px;
   :disabled {
     cursor: not-allowed;
   }
 
-  :hover:not(:disabled),
-  :focus:not(:disabled) {
+  :hover:not(:disabled) {
     background-color: ${props => (props.add ? theme.colors.accentGreen : theme.colors.accentRed)};
   }
 `;

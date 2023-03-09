@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { App } from 'components/App';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 // import { store, persistor } from 'redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
