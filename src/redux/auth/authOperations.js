@@ -1,61 +1,48 @@
-// import { signup, login } from 'services/authApi';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import * as api from 'services/authApi';
+import * as api from '../../services/authApi1';
 
-import { instance, token } from 'services/authApi';
-
-export const signup = createAsyncThunk('auth/signup', async (data, { rejectWithValue }) => {
+export const signup = createAsyncThunk('auth/signup', async (credentials, { rejectWithValue }) => {
   try {
-    const result = await api.signup(data);
-    return result;
-  } catch (error) {
-    console.log('error', error);
-    // const { status, data } = response;
-    // const error = { status, message: data.message };
-    return rejectWithValue(error.message);
+    const data = await api.signup(credentials);
+    return data;
+  } catch ({ response }) {
+    return rejectWithValue(response.data.message);
   }
-  //   } catch ({ response }) {
-  //     console.log('response', response);
-  //     const { status, data } = response;
-  //     const error = { status, message: data.message };
-  //     return rejectWithValue(error);
-  //   }
 });
 
-export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
+export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
-    const result = await api.login(data);
-    return result;
-  } catch (error) {
-    return rejectWithValue(error);
+    const data = await api.login(credentials);
+    return data;
+  } catch ({ response }) {
+    return rejectWithValue(response.data.message);
   }
 });
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    const result = await api.logout();
-    return result;
-  } catch (error) {
-    return rejectWithValue(error);
+    await api.logout();
+  } catch ({ response }) {
+    return rejectWithValue(response.data.message);
   }
 });
 
-// export const current = createAsyncThunk('contacts/current', async (_, thunkApi) => {
-//   const state = thunkApi.getState();
-//   const currentToken = state.auth.token;
-//   console.log('currentToken', currentToken);
-//   if (!currentToken) {
-//     return thunkApi.rejectWithValue();
-//   }
-//   token.set(currentToken);
-//   try {
-//     const { data } = await instance.get('/users/current');
-//     return data;
-//   } catch (error) {
-//     // return error;
-//   }
-// });
+// export const current = createAsyncThunk(
+//   'auth/current',
+//   async (_, { rejectWithValue, getState }) => {
+//     try {
+//       const { auth } = getState();
+//       const userToken = auth.token;
 
+//       const data = await api.current(userToken);
+//       return data;
+//     } catch ({ response }) {
+//       return rejectWithValue(response.data.message);
+//     }
+//   }
+// );
+
+// запит потрібен щоб при завантаженні сайта перевірити чи валідний токен і якщо валідний, отримати інфу про користувача за цим токеном
 export const current = createAsyncThunk(
   'auth/current',
   async (_, { getState, rejectWithValue }) => {
@@ -67,36 +54,8 @@ export const current = createAsyncThunk(
     try {
       const data = await api.current(authToken);
       return data;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch ({ response }) {
+      return rejectWithValue(response.data.message);
     }
   }
-  // {
-  //   condition: (_, { getState }) => {
-  //     const { auth } = getState();
-  //     const authToken = auth.token;
-  //     if (!authToken) {
-  //       return false;
-  //     }
-  //   },
-  // }
 );
-
-//
-// export const current = createAsyncThunk(
-//   'auth/current',
-//   async (_, { rejectWithValue, getState }) => {
-//     try {
-//       const { auth } = getState();
-//       const result = await api.current(auth.token);
-//       return result;
-//     } catch (error) {
-//       // const { status, data } = response;
-//       // const error = {
-//       //   status,
-//       //   message: data.message,
-//       // };
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );

@@ -9,7 +9,10 @@ import {
   addToCartFunc,
   addToCartThunk,
   fetchProductsThunk,
+  fetchGoods,
 } from 'redux/products/operations';
+import { selectIsLogin } from 'redux/auth/authSelectors';
+import { Navigate } from 'react-router-dom';
 
 const ProductPage = () => {
   // const [items, setItems] = useState([]);
@@ -17,12 +20,14 @@ const ProductPage = () => {
   const search = useSelector(state => state.cart.search);
   const basket = useSelector(state => state.cart.cart);
   const items = useSelector(state => state.products.products);
+  const isLogin = useSelector(selectIsLogin);
   console.log('basket', basket);
   // const items = useSelector(store => store.products);
 
   useEffect(() => {
     // dispatch(fetchProducts());
-    dispatch(fetchProductsThunk());
+    // dispatch(fetchProductsThunk());
+    dispatch(fetchGoods());
     // const fetch = async () => {
     //   try {
     //     const { data } = await getProducts();
@@ -35,6 +40,10 @@ const ProductPage = () => {
     // };
     // fetch();
   }, [dispatch]);
+
+  // if (!isLogin) {
+  //   return <Navigate to="/login" />;
+  // }
 
   const handleAddProduct = payload => {
     // const isAdded = basket.find(item => item.id === payload.id);
@@ -61,7 +70,7 @@ const ProductPage = () => {
       return items;
     }
     const normalizedSearch = search.toLowerCase();
-    return items.filter(i => i.title.toLowerCase().includes(normalizedSearch));
+    return items.filter(i => i.name.toLowerCase().includes(normalizedSearch));
   };
   // selector func
   // const selectSearchProducts = useSelector(state => {
@@ -74,20 +83,22 @@ const ProductPage = () => {
     return basket.find(i => i.title === title);
   };
 
-  const elements = searchProducts()?.map(i => (
-    <li key={i.id}>
+  const elements = items?.map(i => (
+    <li key={i._id}>
       <span>
-        {i.title} - ${i.price}
+        {/* {i.title} - ${i.price} */}
+        {i.name} - ${i.price}
       </span>
-      <button disabled={isInCart(i.title)} onClick={() => handleAddProduct(i)}>
-        {isInCart(i.title) ? 'In cart' : 'Buy'}
+      <span>{i.description}</span>
+      <button disabled={isInCart(i.name)} onClick={() => handleAddProduct(i)}>
+        {isInCart(i.name) ? 'In cart' : 'Buy'}
       </button>
     </li>
   ));
 
   return (
     <>
-      <input placeholder="search" type="text" value={search} onChange={handleChange} />
+      {/* <input placeholder="search" type="text" value={search} onChange={handleChange} /> */}
       {/* <Search /> */}
       <ul>{elements}</ul>
     </>

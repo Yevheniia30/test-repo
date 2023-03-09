@@ -20,7 +20,7 @@ const BasketPage = () => {
 
   const handleChangeQuantity = (item, add) => {
     if (!add && item.quantity === 1) {
-      return dispatch(deleteFromCartFunc(item.id));
+      return dispatch(deleteFromCartFunc(item._id));
     }
     // const updItem = { ...item, quantity: add ? item.quantity + 1 : item.quantity - 1 };
     // dispatch(addQuantity({ id, add: true }));
@@ -37,15 +37,15 @@ const BasketPage = () => {
   // };
 
   const elements = products?.map(i => (
-    <li key={i.id}>
+    <li key={i._id}>
       <span>
-        {i.title} - ${i.price}
+        {i.name} - ${i.price}
       </span>
       <span>quantity:{i.quantity}</span>
       {/* <button onClick={() => handleDecrQuantity(i)}>-</button> */}
       <button onClick={() => handleChangeQuantity(i)}>-</button>
       <button onClick={() => handleChangeQuantity(i, true)}>+</button>
-      <button onClick={() => handleDelete(i.id)}>Delete</button>
+      <button onClick={() => handleDelete(i._id)}>Delete</button>
     </li>
   ));
 

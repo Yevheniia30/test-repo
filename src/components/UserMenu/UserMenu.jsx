@@ -12,9 +12,9 @@ const UserMenu = () => {
         {user?.name} {user?.email}
       </p>
 
-      <button type="button" onClick={() => dispatch(logout())}>
+      {/* <button type="button" onClick={() => dispatch(logout())}>
         Exit
-      </button>
+      </button> */}
     </>
   );
 };

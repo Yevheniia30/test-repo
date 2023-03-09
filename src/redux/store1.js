@@ -19,9 +19,11 @@ import productReducer from './products/slice';
 // by createReducer
 // import { productsReducer } from './products/reducer';
 // by createSlice
-import productsReducer from './products/reducer';
+// import productsReducer from './products/reducer';
 import { basketReducer } from './products/reducer';
 import { addToCartError, addToCartLoading, addToCartSuccess } from './products/actions';
+import authReducer from './auth/authSlice';
+import productsReducer from './products/products-slice';
 
 // const reducer = (store = initialStore, action) => {
 //   switch (action.type) {
@@ -96,13 +98,14 @@ const rootReducer = combineReducers({
 // );
 
 const persistConfig = {
-  key: 'products',
+  key: 'userStorage',
   storage,
-  whitelist: ['cart'],
+  whitelist: ['token'],
 };
 
 // const persistedReducer = persistReducer(persistConfig, productReducer);
-const persistedReducer = persistReducer(persistConfig, basketReducer);
+// const persistedReducer = persistReducer(persistConfig, basketReducer);
+const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const storage1 = configureStore({
   // reducer: {
@@ -110,7 +113,7 @@ export const storage1 = configureStore({
   //   search: searchReducer,
   // },
   // reducer: productReducer,
-  reducer: { cart: persistedReducer, products: productsReducer },
+  reducer: { cart: basketReducer, products: productsReducer, auth: persistedReducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -1,78 +1,64 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { signup, login, logout, current } from './authOperations';
+import { current, login, logout, signup } from './authOperations';
 
 const initialState = {
   user: {},
-  token: '',
+  token: null,
+  isLogin: false,
   loading: false,
   error: null,
-  isLogin: false,
+};
+
+const handlePending = state => {
+  state.loading = true;
+  state.error = null;
+};
+
+const handleError = (state, { payload }) => {
+  state.error = payload;
+  state.loading = false;
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: {
-    [signup.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [signup.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = payload.user;
-      store.token = payload.token;
-      store.isLogin = true;
-    },
-    [signup.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.error = payload;
-    },
-    //
-    [login.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [login.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = payload.user;
-      store.token = payload.token;
-      store.isLogin = true;
-    },
-    [login.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.error = payload;
-    },
-    //
-    [logout.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [logout.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = {};
-      store.token = '';
-      store.isLogin = false;
-    },
-    [logout.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.error = payload;
-    },
-    //
-    [current.pending]: store => {
-      store.loading = true;
-      store.error = null;
-    },
-    [current.fulfilled]: (store, { payload }) => {
-      store.loading = false;
-      store.user = payload;
-      // store.token = payload.token;
-      store.isLogin = true;
-    },
-    [current.rejected]: (store, { payload }) => {
-      store.loading = false;
-      store.token = '';
-      store.error = payload;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(signup.pending, handlePending)
+      .addCase(signup.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLogin = true;
+        state.loading = false;
+      })
+      .addCase(signup.rejected, handleError)
+      //
+      .addCase(login.pending, handlePending)
+      .addCase(login.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLogin = true;
+        state.loading = false;
+      })
+      .addCase(login.rejected, handleError)
+      //
+      .addCase(logout.pending, handlePending)
+      .addCase(logout.fulfilled, state => {
+        state.user = {};
+        state.token = null;
+        state.isLogin = false;
+        state.loading = false;
+      })
+      .addCase(logout.rejected, handleError)
+      //
+      .addCase(current.pending, handlePending)
+      .addCase(current.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
+        state.token = payload.token;
+        state.isLogin = true;
+        state.loading = false;
+      })
+      .addCase(current.rejected, handleError);
   },
 });
 

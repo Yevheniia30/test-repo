@@ -99,35 +99,36 @@ export const basketReducer = createReducer(initialStore, {
     store.loading = false;
   },
   // addtocart
-  [addToCartThunk.pending]: store => {
+  // [addToCartThunk.pending]: store => {
+  //   store.loading = true;
+  // },
+  // [addToCartThunk.fulfilled]: (store, { payload }) => {
+  //   // console.log(store.getState());
+  //   store.cart.push(payload);
+  //   store.loading = false;
+  // },
+  // [addToCartThunk.rejected]: (store, { payload }) => {
+  //   console.log(store);
+  //   store.error = payload;
+  //   store.loading = false;
+  // },
+  [addToCartLoading]: store => {
     store.loading = true;
   },
-  [addToCartThunk.fulfilled]: (store, { payload }) => {
+  [addToCartSuccess]: (store, { payload }) => {
     console.log();
     store.cart.push(payload);
     store.loading = false;
   },
-  [addToCartThunk.rejected]: (store, { payload }) => {
+  [addToCartError]: (store, { payload }) => {
     store.error = payload;
     store.loading = false;
   },
-  // [addToCartLoading]: store => {
-  //   store.loading = true;
-  // },
-  // [addToCartSuccess]: (store, { payload }) => {
-  //   console.log();
-  //   store.cart.push(payload);
-  //   store.loading = false;
-  // },
-  // [addToCartError]: (store, { payload }) => {
-  //   store.error = payload;
-  //   store.loading = false;
-  // },
   [deleteFromCartLoading]: store => {
     store.loading = true;
   },
   [deleteFromCartSuccess]: (store, { payload }) => {
-    store.cart = store.cart.filter(({ id }) => id !== payload);
+    store.cart = store.cart.filter(({ _id }) => _id !== payload);
     store.loading = false;
   },
   [deleteFromCartError]: (store, { payload }) => {
@@ -136,7 +137,7 @@ export const basketReducer = createReducer(initialStore, {
   },
   // =======  change QUANTITYTY=============
   [changeQuantityThunk.fulfilled]: (store, { payload }) => {
-    store.cart = store.cart.map(item => (item.id === payload.id ? payload : item));
+    store.cart = store.cart.map(item => (item._id === payload._id ? payload : item));
   },
 });
 

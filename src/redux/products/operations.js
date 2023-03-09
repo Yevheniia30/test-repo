@@ -5,6 +5,8 @@ import {
   deleteFromCart,
   getCart,
   changeQuantity,
+  getGoods,
+  addGood,
 } from 'services/productsApi';
 import {
   fetchProductsLoading,
@@ -55,10 +57,10 @@ export const fetchProducts = () => {
   return func;
 };
 
-const isDublicate = ({ title }, cart) => {
-  console.log('data', title, cart);
-  const normalizedTitle = title.toLowerCase();
-  const isAdded = cart.find(item => item.title.toLowerCase().includes(normalizedTitle));
+const isDublicate = ({ name }, cart) => {
+  console.log('data', name, cart);
+  // const normalizedTitle = name.toLowerCase();
+  const isAdded = cart.find(item => item.name === name);
   return isAdded;
 };
 
@@ -88,9 +90,11 @@ export const addToCartThunk = createAsyncThunk(
   },
   {
     condition: (data, { getState }) => {
+      console.log(getState());
       const { cart } = getState();
       if (isDublicate(data, cart.cart)) {
-        alert(`${data.title} isalredy in the cart`);
+        console.log('isDublicate');
+        alert(`${data.name} isalredy in the cart`);
         return false;
       }
     },
@@ -137,6 +141,7 @@ export const changeQuantityThunk = createAsyncThunk(
   async ({ data, add }, { rejectWithValue }) => {
     try {
       const updItem = { ...data, quantity: add ? data.quantity + 1 : data.quantity - 1 };
+      console.log('updItem', updItem);
       const { data: result } = await changeQuantity(updItem);
       return result;
     } catch (error) {
@@ -144,3 +149,22 @@ export const changeQuantityThunk = createAsyncThunk(
     }
   }
 );
+
+// ==============8  module=================
+export const fetchGoods = createAsyncThunk('goods/fetch', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await getGoods();
+    return data;
+  } catch ({ response }) {
+    return rejectWithValue(response.data.message);
+  }
+});
+
+export const addGoods = createAsyncThunk('goods/add', async (data, { rejectWithValue }) => {
+  try {
+    const { data: result } = await addGood(data);
+    return result;
+  } catch ({ response }) {
+    return rejectWithValue(response.data.message);
+  }
+});

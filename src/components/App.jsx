@@ -26,10 +26,10 @@ import { LangContext } from 'context/LangContext';
 import { LangProvider } from 'context/LangContext';
 import NavBar from './NavBar/NavBar';
 import Home from '../pages/Home/Home';
-import RegisterPage from 'pages/RegisterPage/RegisterPage';
+import SignupPage from 'pages/SignupPage/SignupPage';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
 import PostPage from 'pages/PostPage/PostPage';
-import Login from 'pages/Login/Login';
+import LoginPage from 'pages/LoginPage/LoginPage';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import PublicRoute from './PublicRoute/PublicRoute';
 
@@ -50,26 +50,26 @@ import BasketPage from 'pages/BasketPage/BasketPage';
 //   width: ${({ theme }) => theme.width.xl}px;
 // `;
 
-const routes = [
-  { path: '/', element: <Home /> },
-  { path: '/posts', element: <Posts /> },
-  { path: '/posts/:id', element: <PostPage /> },
-  { path: '/users', element: <Students /> },
-  { path: '/register', element: <RegisterPage /> },
-  { path: '/login', element: <Login /> },
-  // { path: '*', element: <NotFoundPage /> },
-  { path: '*', element: <Navigate to="/" /> },
-];
+// const routes = [
+//   { path: '/', element: <Home /> },
+//   { path: '/posts', element: <Posts /> },
+//   { path: '/posts/:id', element: <PostPage /> },
+//   { path: '/users', element: <Students /> },
+//   { path: '/register', element: <RegisterPage /> },
+//   { path: '/login', element: <Login /> },
+//   // { path: '*', element: <NotFoundPage /> },
+//   { path: '*', element: <Navigate to="/" /> },
+// ];
 
 export const App = () => {
   // const [lang, setLang] = useState('UA');
   // console.log('article', article);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   console.log('dispatch(current');
-  //   dispatch(current());
-  // }, [dispatch]);
+  useEffect(() => {
+    console.log('dispatch(current');
+    dispatch(current());
+  }, [dispatch]);
 
   // const salaries1 = {
   //   Manager: { salary: 1000, tax: '10%' },
@@ -106,7 +106,7 @@ export const App = () => {
       {/* <LangContext.Provider value="ua"> */}
       <ThemeProvider theme={theme}>
         {' '}
-        <Box m={5} width="xl">
+        <Box m={5} width="l">
           <NavBar />
           {/* <Students /> */}
           {/* <Clock /> */}
@@ -114,18 +114,19 @@ export const App = () => {
           {/* <Posts /> */}
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
-            {/* <Route element={<PrivateRoute />}>
-              <Route path="/users" element={<Students />} />
-            </Route> */}
-            {/* <Route element={<PublicRoute />}>
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/login" element={<Login />} />
-            </Route> */}
+            <Route element={<PrivateRoute />}>
+              {/* <Route path="/users" element={<Students />} /> */}
+              <Route path="/products" element={<ProductPage />} />
+              <Route path="/basket" element={<BasketPage />} />
+            </Route>
+            <Route element={<PublicRoute />}>
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Route>
 
-            <Route path="/heroes" element={<HeroesPage />} />
-            <Route path="/heroes/:id" element={<HeroPage />} />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/basket" element={<BasketPage />} />
+            {/* <Route path="/heroes" element={<HeroesPage />} /> */}
+            {/* <Route path="/heroes/:id" element={<HeroPage />} /> */}
+
             {/* <Route path="*" element={<Navigate to="/" />} /> */}
 
             {/* <Home /> */}

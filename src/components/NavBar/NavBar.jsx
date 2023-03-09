@@ -1,12 +1,15 @@
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-// import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LangSwitcher from 'components/LangSwitcher/LangSwitcher';
 import styled from 'styled-components';
 import AuthMenu from 'components/AuthMenu/AuthMenu';
 import UserMenu from 'components/UserMenu/UserMenu';
+import { selectUser } from 'redux/auth/authSelectors';
+import { selectIsLogin } from 'redux/auth/authSelectors';
 
 import { useAuth } from 'hooks/useAuth';
+import Button from 'components/Button/Button';
+import { logout } from 'redux/auth/authOperations';
 // import { selectIsLogin } from 'redux/auth/authSelectors';
 const StyledLink = styled(NavLink)`
   color: black;
@@ -36,23 +39,50 @@ const NavBar = () => {
   // const isLogin = useSelector(selectIsLogin);
   // const isLogin = useAuth();
   const cart = useSelector(state => state.cart.cart);
+  const user = useSelector(selectUser);
+  const isLogin = useSelector(selectIsLogin);
+  const dispatch = useDispatch();
+
   const sum = cart.reduce((acc, value) => acc + parseInt(value.price) * value.quantity, 0);
   const quantity = cart.reduce((acc, value) => acc + value.quantity, 0);
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
-    <header>
+    <header style={{ display: 'flex', justifyContent: 'space-between' }}>
       <nav>
         {/* <StyledLink to="/">HOME</StyledLink> */}
         {/* <StyledLink to="/users">USERS</StyledLink> */}
-        <StyledLink to="/heroes">HEROES</StyledLink>
-        <StyledLink to="/products">PRODUCTS</StyledLink>
-        <StyledLink to="/basket">BASKET</StyledLink>
-        {cart?.length ? (
-          <span>
-            {quantity}|{sum}
-          </span>
+        {/* <StyledLink to="/heroes">HEROES</StyledLink> */}
+        {!isLogin ? (
+          <>
+            <StyledLink to="/signup">SIGNUP</StyledLink>
+            <StyledLink to="/login">LOGIN</StyledLink>
+          </>
         ) : (
-          <span>Basket is empty</span>
+          <>
+            <StyledLink to="/products">PRODUCTS</StyledLink>
+            <StyledLink to="/basket">BASKET</StyledLink>
+          </>
+        )}
+      </nav>
+      <div style={{ display: 'flex', gap: '16px', justifyContent: 'space-between' }}>
+        {isLogin && user && (
+          <>
+            {cart?.length ? (
+              <span>
+                {quantity}|{sum}
+              </span>
+            ) : (
+              <span>Basket is empty</span>
+            )}
+
+            <div>
+              <span>{`Hello, ${user.name}!`}</span> <button onClick={handleLogout}>Exit</button>
+            </div>
+          </>
         )}
         {/* {isLogin ? <UserMenu /> : <AuthMenu />} */}
 
@@ -62,7 +92,7 @@ const NavBar = () => {
           </StyledLink>
         ))} */}
         <LangSwitcher />
-      </nav>
+      </div>
     </header>
   );
 };
