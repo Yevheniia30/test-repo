@@ -16,6 +16,7 @@
 // example theme
 export const theme = {
   sizes: {
+    xxs: 60,
     xs: 100,
     s: 200,
     m: 600,
@@ -30,6 +31,7 @@ export const theme = {
     accentGreen: 'green',
     accentRed: 'orangered',
     muted: '#f6f6f6',
+    blue: '#96accc',
   },
   fonts: {
     body: 'system-ui, sans-serif',

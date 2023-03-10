@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LangSwitcher from 'components/LangSwitcher/LangSwitcher';
 import styled from 'styled-components';
@@ -42,6 +42,9 @@ const NavBar = () => {
   const user = useSelector(selectUser);
   const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  console.log('location', location);
 
   const sum = cart.reduce((acc, value) => acc + parseInt(value.price) * value.quantity, 0);
   const quantity = cart.reduce((acc, value) => acc + value.quantity, 0);
@@ -55,7 +58,7 @@ const NavBar = () => {
       <nav>
         {/* <StyledLink to="/">HOME</StyledLink> */}
         {/* <StyledLink to="/users">USERS</StyledLink> */}
-        {/* <StyledLink to="/heroes">HEROES</StyledLink> */}
+
         {!isLogin ? (
           <>
             <StyledLink to="/signup">SIGNUP</StyledLink>
@@ -65,6 +68,7 @@ const NavBar = () => {
           <>
             <StyledLink to="/products">PRODUCTS</StyledLink>
             <StyledLink to="/basket">BASKET</StyledLink>
+            <StyledLink to="/heroes">HEROES</StyledLink>
           </>
         )}
       </nav>

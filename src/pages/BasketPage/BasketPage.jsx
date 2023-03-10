@@ -4,13 +4,19 @@ import { changeQuantityThunk, fetchCart } from 'redux/products/operations';
 // import { removeProduct } from 'redux/products/actions';
 import { removeProduct, addQuantity, decrQuantity } from 'redux/products/slice';
 import { deleteFromCartFunc } from 'redux/products/operations';
+import { useLocation } from 'react-router-dom';
 
 const BasketPage = () => {
   const products = useSelector(store => store.cart.cart);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
+  // const { pathname } = useLocation();
+  // useEffect(() => {
+  //   localStorage.setItem('location', pathname);
+  // }, [pathname]);
   // коли змінюється стор, перемальовується компонент який на нього підписаний
   // console.log('products', products);
   const handleDelete = id => {

@@ -117,6 +117,8 @@ export const App = () => {
               {/* <Route path="/users" element={<Students />} /> */}
               <Route path="/products" element={<ProductPage />} />
               <Route path="/basket" element={<BasketPage />} />
+              <Route path="/heroes" element={<HeroesPage />} />
+              <Route path="/heroes/:id" element={<HeroPage />} />
             </Route>
             <Route element={<PublicRoute />}>
               <Route path="/signup" element={<SignupPage />} />

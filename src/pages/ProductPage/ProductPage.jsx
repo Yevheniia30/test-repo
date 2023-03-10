@@ -17,13 +17,18 @@ import { selectIsLogin } from 'redux/auth/authSelectors';
 import { Navigate } from 'react-router-dom';
 import Form from 'components/Form/Form';
 import css from './ProductsPage.module.css';
+import Loader from 'shared/components/Loader/Loader';
+import { theme } from 'themes/theme';
 
 const ProductPage = () => {
   // const [items, setItems] = useState([]);
   const dispatch = useDispatch();
+
   const search = useSelector(state => state.cart.search);
   const basket = useSelector(state => state.cart.cart);
   const items = useSelector(state => state.products.products);
+  const loading = useSelector(state => state.products.loading);
+
   const isLogin = useSelector(selectIsLogin);
   // console.log('basket', basket);
   // const items = useSelector(store => store.products);
@@ -113,6 +118,7 @@ const ProductPage = () => {
   return (
     <>
       <Form onSubmit={handleSubmit} />
+      {loading && <Loader color={theme.colors.blue} loading={loading} size={theme.sizes.xxs} />}
       <table className={css.table}>
         <thead className={css.head}>
           <tr>

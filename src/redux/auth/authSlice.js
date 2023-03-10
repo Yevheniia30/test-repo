@@ -7,6 +7,7 @@ const initialState = {
   isLogin: false,
   loading: false,
   error: null,
+  location: null,
 };
 
 const handlePending = state => {
@@ -22,6 +23,11 @@ const handleError = (state, { payload }) => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    setLocation: (state, { payload }) => {
+      state.location = payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(signup.pending, handlePending)
@@ -63,3 +69,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { setLocation } = authSlice.actions;
