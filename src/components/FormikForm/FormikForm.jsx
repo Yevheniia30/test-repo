@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { width } from 'styled-system';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -38,6 +39,13 @@ const IconButton = styled.button`
   border: none;
 `;
 
+const StyledProgressBar = styled.div`
+  height: 3px;
+  width: ${props => props.width};
+  background-color: ${props => props.color};
+  /* margin-top: 2px; */
+`;
+
 const initialValues = {
   name: '',
   email: '',
@@ -59,6 +67,7 @@ const userSchema = Yup.object().shape({
 
 function FormikForm(props) {
   const [showPassword, setShowPassword] = useState(false);
+  const [pwdReliability, setPwdReliability] = useState([]);
 
   const handleClickShowPassword = () => setShowPassword(show => !show);
 
@@ -69,6 +78,39 @@ function FormikForm(props) {
 
   const FormError = ({ name }) => {
     return <ErrorMessage name={name} render={msg => <StyledError>{msg}</StyledError>} />;
+  };
+
+  const handleChange = value => {
+    console.log('e', value);
+    let prog = [/[$@$!%*#?&]/, /[A-Z]/, /[0-9]/, /[a-z]/].reduce(
+      (memo, test) => memo + test.test(value),
+      0
+    );
+    if (prog > 2 && value.length > 7) {
+      console.log('+++++');
+      prog++;
+    }
+    console.log('prog', prog);
+
+    switch (prog) {
+      case 0:
+        setPwdReliability({});
+        break;
+      case 1:
+        setPwdReliability({ color: 'red', length: '25%' });
+        break;
+      case 2:
+        setPwdReliability({ color: 'orange', length: '50%' });
+        break;
+      case 3:
+        setPwdReliability({ color: 'yellow', length: '75%' });
+        break;
+      case 4 || 5:
+        setPwdReliability({ color: 'green', length: '100%' });
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -88,12 +130,16 @@ function FormikForm(props) {
               type={showPassword ? 'text' : 'password'}
               name="password"
               id="user-password"
+              validate={handleChange}
             />
             {formik.values.password && (
               <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}>
                 {!showPassword ? <FaEye /> : <FaEyeSlash />}
               </IconButton>
             )}
+            <div style={{ height: '3px', width: '50%', display: 'flex', marginTop: '2px' }}>
+              <StyledProgressBar color={pwdReliability?.color} width={pwdReliability.length} />
+            </div>
           </StyledPassword>
           <FormError name="password" />
           <StyledBtn>add</StyledBtn>
