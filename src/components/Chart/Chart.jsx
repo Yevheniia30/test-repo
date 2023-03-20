@@ -1,6 +1,6 @@
 import { Pie, PieChart, Cell, Tooltip, Label } from 'recharts';
 import styled from 'styled-components';
-
+import { useMediaQuery } from 'react-responsive';
 const StyledTooltipWrapper = styled.div`
   /* background-color: #000; */
   padding: 5px;
@@ -27,14 +27,16 @@ const CustomTooltip = ({ active, payload }) => {
 };
 
 const Chart = ({ data }) => {
+  const isBigScreen = useMediaQuery({ query: '(min-width: 1200px)' });
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' });
   return (
-    <PieChart width={800} height={400}>
+    <PieChart width={isBigScreen ? 800 : 600} height={400}>
       <Pie
         data={data}
         cx={400}
         cy={200}
-        innerRadius={104}
-        outerRadius={144}
+        innerRadius={isBigScreen ? 104 : 55}
+        outerRadius={isBigScreen ? 144 : 95}
         fill="#8884d8"
         // paddingAngle={5}
         dataKey="value"
