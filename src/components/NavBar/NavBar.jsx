@@ -72,6 +72,7 @@ const NavBar = () => {
           </>
         )}
         <StyledLink to="/formik">FORMIK</StyledLink>
+        <StyledLink to="/summary">DIAGRAM</StyledLink>
       </nav>
       <div style={{ display: 'flex', gap: '16px', justifyContent: 'space-between' }}>
         {isLogin && user && (

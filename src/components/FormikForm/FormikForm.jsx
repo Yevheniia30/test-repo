@@ -1,58 +1,24 @@
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import styled from 'styled-components';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { width } from 'styled-system';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledField = styled(Field)`
-  width: 50%;
-`;
-
-const StyledPassword = styled.div`
-  position: relative;
-`;
-
-const StyledBtn = styled.button`
-  width: 25%;
-  margin-top: 15px;
-`;
-
-const StyledLabel = styled.label`
-  margin-top: 10px;
-`;
-
-const StyledError = styled.p`
-  color: red;
-`;
-
-const IconButton = styled.button`
-  position: absolute;
-  left: 390px;
-  top: 2px;
-  background-color: transparent;
-  border: none;
-`;
-
-const StyledProgressBar = styled.div`
-  height: 3px;
-  width: ${props => props.width};
-  background-color: ${props => props.color};
-  /* margin-top: 2px; */
-`;
-
-const initialValues = {
-  name: '',
-  email: '',
-  password: '',
-};
+import {
+  StyledBtn,
+  StyledError,
+  StyledField,
+  StyledLabel,
+  StyledPassword,
+  StyledProgressBar,
+  StyledForm,
+  IconButton,
+} from './FormikForm.styled.js';
+import styled from 'styled-components';
 
 const userSchema = Yup.object().shape({
+  // date: Yup.date().required('Data is a required field'),
   name: Yup.string()
     .min(2, 'Too Short!')
     .max(20, 'Too Long!')
@@ -64,6 +30,13 @@ const userSchema = Yup.object().shape({
     // .max(20, 'Too Long!')
     .required('Required'),
 });
+
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+  date: new Date(),
+};
 
 function FormikForm(props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -113,39 +86,64 @@ function FormikForm(props) {
     }
   };
 
-  return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={userSchema}>
-      {formik => (
-        <StyledForm>
-          <StyledLabel htmlFor="user-name">User name</StyledLabel>
-          <StyledField type="text" name="name" id="user-name" />
-          <FormError name="name" />
-          <StyledLabel htmlFor="user-email">User email</StyledLabel>
-          <StyledField type="text" name="email" id="user-email" />
-          <FormError name="email" />
-          <StyledLabel htmlFor="user-password">User password</StyledLabel>
+  const DatePickerField = ({ name, value, onChange }) => {
+    return (
+      <DatePicker
+        selected={(value && new Date(value)) || null}
+        onChange={val => {
+          onChange(name, val);
+        }}
+        customInput={<StyledField />}
+      />
+    );
+  };
 
-          <StyledPassword>
-            <StyledField
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              id="user-password"
-              validate={handleChange}
+  return (
+    <>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={userSchema}>
+        {formik => (
+          <StyledForm>
+            <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+            <DatePickerField
+              name="date"
+              value={formik.values.date}
+              onChange={formik.setFieldValue}
             />
-            {formik.values.password && (
-              <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}>
-                {!showPassword ? <FaEye /> : <FaEyeSlash />}
-              </IconButton>
-            )}
-            <div style={{ height: '3px', width: '50%', display: 'flex', marginTop: '2px' }}>
-              <StyledProgressBar color={pwdReliability?.color} width={pwdReliability.length} />
-            </div>
-          </StyledPassword>
-          <FormError name="password" />
-          <StyledBtn>add</StyledBtn>
-        </StyledForm>
-      )}
-    </Formik>
+
+            <StyledLabel htmlFor="user-name">User name</StyledLabel>
+            <StyledField type="text" name="name" id="user-name" />
+            <FormError name="name" />
+            <StyledLabel htmlFor="user-email">User email</StyledLabel>
+            <StyledField type="text" name="email" id="user-email" />
+            <FormError name="email" />
+            <StyledLabel htmlFor="user-password">User password</StyledLabel>
+
+            <StyledPassword>
+              <StyledField
+                type={showPassword ? 'text' : 'password'}
+                name="password"
+                id="user-password"
+                validate={handleChange}
+              />
+              {formik.values.password && (
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                >
+                  {!showPassword ? <FaEye /> : <FaEyeSlash />}
+                </IconButton>
+              )}
+              <div style={{ height: '3px', width: '50%', display: 'flex', marginTop: '2px' }}>
+                <StyledProgressBar color={pwdReliability?.color} width={pwdReliability.length} />
+              </div>
+            </StyledPassword>
+            <FormError name="password" />
+            <StyledBtn>add</StyledBtn>
+          </StyledForm>
+        )}
+      </Formik>
+      {/* <DatePi /> */}
+    </>
   );
 }
 

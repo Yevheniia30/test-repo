@@ -43,6 +43,7 @@ import HeroesPage from 'pages/HeroesPage/HeroesPage';
 import HeroPage from 'pages/HeroPage/HeroPage';
 import ProductPage from 'pages/ProductPage/ProductPage';
 import BasketPage from 'pages/BasketPage/BasketPage';
+import SummaryPage from 'pages/SummaryPage/SummaryPage';
 // export const LangContext = createContext('UA');
 // const AppWrapper = styled.div`
 //   margin: ${({ theme }) => theme.spaces[0]} auto;
@@ -125,6 +126,7 @@ export const App = () => {
               <Route path="/login" element={<LoginPage />} />
             </Route>
             <Route path="/formik" element={<FormikForm />} />
+            <Route path="/summary" element={<SummaryPage />} />
 
             {/* <Route path="/heroes" element={<HeroesPage />} /> */}
             {/* <Route path="/heroes/:id" element={<HeroPage />} /> */}
