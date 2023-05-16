@@ -1,0 +1,27 @@
+{
+
+    "name":{
+        "en": "Name",
+        "ua": "Ім'я"
+    },
+    "phone": {
+        "en": "Phone",
+        "ua": "Телефон"
+    },
+    "add":{
+        "en": "Add",
+        "ua": "Додати"
+    },
+    "addToFavorites":{
+        "en": "Add to favorites",
+        "ua": "Додати в обрані"
+    },
+    "del":{
+        "en": "Delete",
+        "ua": "Видалити"
+    },
+    "edit":{
+        "en": "Edit",
+        "ua": "Редагувати"
+    }
+}
